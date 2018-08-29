@@ -6,7 +6,7 @@ O <b>OLUApp</b> é um aplicativo <i>mobile</i> de uma carteira de saúde, ele aj
 
 ## Download
 
-Você pode encontrar versões disponíveis para <i>download</i> na página de (<i>Releases</i>)[https://github.com/chql/oluapp/releases].
+Você pode encontrar versões disponíveis para <i>download</i> na página de [<i>Releases</i>](https://github.com/chql/oluapp/releases).
 
 ## Desenvolvimento
 
@@ -16,8 +16,8 @@ O aplicativo é desenvolvido utilizando o [Ionic Framework](https://ionicframewo
 
 ### Baixando e compilando
 
-Para saber como compilar e executar a aplicação você mesmo a partir do código-fonte veja a (<i>wiki</i>)[https://github.com/chql/oluapp/wiki] do projeto.
+Para saber como compilar e executar a aplicação você mesmo a partir do código-fonte veja a [<i>wiki</i>](https://github.com/chql/oluapp/wiki) do projeto.
 
 ## Contribuindo
 
-Você pode contribuir reportando os problemas ou sugestões que encontrar relacionados a aplicação em si ou ao projeto  na página de (<i>Issues</i>)[https://github.com/chql/oluapp/issues].
+Você pode contribuir reportando os problemas ou sugestões que encontrar relacionados a aplicação em si ou ao projeto  na página de [<i>Issues</i>](https://github.com/chql/oluapp/issues).

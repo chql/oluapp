@@ -1,0 +1,7 @@
+{
+  "name": "oluapp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
