@@ -1,14 +1,31 @@
-<ion-header no-shadow>
-  <ion-navbar>
-  </ion-navbar>
-</ion-header>
-
 <ion-content no-bounce>
-  <ion-slides pager="true" dir="{{dir}}" (ionSlideWillChange)="onSlideChangeStart($event)">
-    <ion-slide *ngFor="let slide of slides">
-      <img [src]="slide.image" class="slide-image" />
-      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
-      <p [innerHTML]="slide.description"></p>
-    </ion-slide>
-  </ion-slides>
+  <ion-label class="main-logo">
+      <img src="assets/img/icon.png" class="menulogo" height="75"/>
+  </ion-label>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button full clear class="mainmenubutton icon-vacina">Vacinas</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button full clear class="mainmenubutton icon-medicamento">Medicamentos</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button full clear class="mainmenubutton icon-exame">Exames</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button full clear class="mainmenubutton icon-consulta">Consultas</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button full clear class="mainmenubutton icon-alergia">Alergias</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button full clear class="mainmenubutton icon-cirurgia">Cirurgias</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

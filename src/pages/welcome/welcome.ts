@@ -11,7 +11,7 @@ export interface Slide {
 
 @IonicPage()
 @Component({
-  selector: 'page-tutorial',
+  selector: 'page-welcome',
   templateUrl: 'welcome.html'
 })
 export class WelcomePage {

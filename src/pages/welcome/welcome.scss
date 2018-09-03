@@ -1,36 +1,48 @@
-page-tutorial {
-  .toolbar-background {
-    background: transparent;
-    border-color: transparent;
-  }
+page-welcome {
 
-  .slide-zoom {
-    height: 100%;
-  }
+    /* diretivas para os icones de cada categoria */
+    .icon-alergia     { background-image: url(../assets/img/alergia.png);     }
+    .icon-cirurgia    { background-image: url(../assets/img/cirurgia.png);    }
+    .icon-consulta    { background-image: url(../assets/img/consulta.png);    }
+    .icon-exame       { background-image: url(../assets/img/exame.png);       }
+    .icon-medicamento { background-image: url(../assets/img/medicamento.png); }
+    .icon-vacina      { background-image: url(../assets/img/vacina.png);      }
 
-  .slide-title {
-    margin-top: 2.8rem;
-  }
-
-  .slide-image {
-    max-height: 40%;
-    max-width: 60%;
-    margin: 36px 0;
-  }
-
-  b {
-    font-weight: 500;
-  }
-
-  p {
-    padding: 0 40px;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #60646B;
-
-    b {
-      color: #000000;
+    /* classe principal para os botoes do menu principal */
+    .mainmenubutton {
+        /* posicionamento e alinhamento */
+        margin: 0;
+        padding-top: 85px;
+        text-align: center;
+        /* aparencia */
+        height: 125px;
+        /* definicoes do background */
+        /* sobrepoe o fundo branco com o icone */
+        background-color: white;
+        background-repeat: no-repeat;
+        background-position: center 0px;
+        background-size: 75px;
+        /* texto verde */
+        color: green;
+        font-size: 15px;
     }
-  }
 
+    /* mantem a aparecia do botao durante animacao ao pressionar */
+    .mainmenubutton:hover {
+        background-color: rgba(255,255,255,0.9) !important;
+    }
+
+    /* definicao de cada item do menu */
+    .col {
+        /* elimina espaco entre botoes */
+        margin: 0 !important;
+        padding: 0 !important;
+        /* cria pequena linha divisoria */
+        border: solid 1px #00b554;
+    }
+
+    /* configura logomarca no topo do menu */
+    .main-logo {
+        text-align: center;
+    }
 }
