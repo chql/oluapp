@@ -1,0 +1,27 @@
+<ion-content no-bounce>
+  <form (ngSubmit)="save()">
+      <h4>Testando SQLite</h4>
+      <ion-list>
+        <ion-item>
+          <ion-label floating>Nome</ion-label>
+          <ion-input type="text" [(ngModel)]="vacina.nome" name="nome"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Tipo</ion-label>
+          <ion-input type="text" [(ngModel)]="vacina.tipo" name="tipo"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Observações</ion-label>
+          <ion-input type="text" [(ngModel)]="vacina.observacoes" name="observacoes"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Data</ion-label>
+          <ion-input type="date" [(ngModel)]="vacina.data" name="data"></ion-input>
+        </ion-item>
+        <ion-item>
+          <button ion-button type="submit" block>Salvar</button>
+        </ion-item>
+      </ion-list>
+  </form>
+</ion-content>
+
