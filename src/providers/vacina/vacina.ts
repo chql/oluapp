@@ -104,17 +104,32 @@ export class VacinaProvider {
             if (data.rows.length > 0) {
               let vacinas: any[] = [];
               for (let i = 0; i < data.rows.length; i++) {
-                let vacina = data.rows.item(i);
-                vacinas.push(vacina);
+                let v = new Vacina();
+                let t = data.rows.item(i);
+                v.id = t['id'];
+                v.nome = t['nome'];
+                v.data = t['data'];
+                v.observacoes = t['observacoes'];
+                v.data_proxima = t['data_proxima'];
+                v.tipo = t['tipo'];
+                v.lote = t['lote'];
+                v._data_criacao = t['_data_criacao'];
+                vacinas.push(v);
               }
               return vacinas;
             } else {
               return [];
             }
           })
-          .catch((e) => console.error(e));
+          .catch((e) => {
+            console.error(e);
+            return [];
+          });
       })
-      .catch((e) => console.error(e));
+      .catch((e) => {
+        console.error(e);
+        return [];
+      });
   }
 }
 

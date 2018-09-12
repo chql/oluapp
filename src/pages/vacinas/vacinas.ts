@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { VacinasAddPage } from '../vacinas-add/vacinas-add';
+import { VacinaProvider } from "../../providers/vacina/vacina";
+import { DatabaseProvider } from "../../providers/database/database";
 
 @IonicPage()
 @Component({
@@ -15,34 +17,11 @@ export class VacinasPage {
 
   monthsName : Array<string> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public translate : TranslateService) {
-
-	  this.vacinas = [
-		  {
-		    id: 1,
-			nome: 'Penicilina',
-			tipo: 'Antibiotica',
-			observacao: 'Puta merda bixo!',
-			data: new Date('2018-03-15'),
-			anexos: []
-		  },
-		  {
-			id: 2,
-			nome: 'Morfina',
-			tipo: 'Relaxante',
-			observacao: 'Puta merda bixo!',
-			data: new Date('2018-09-16'),
-			anexos: []
-		  },
-		  {
-			id: 3,
-			nome: 'Morfina',
-			tipo: 'Relaxante',
-			observacao: 'Puta merda bixo!',
-			data: new Date('2018-01-29'),
-			anexos: []
-	     }
-	  ];
+  constructor(public navCtrl: NavController, public navParams: NavParams, public translate : TranslateService, private db: DatabaseProvider) {
+    let provider = new VacinaProvider(db);
+    provider.getAll().then( vacinas => {
+      this.vacinas = vacinas;
+    });
 
 	translate.get([
 		"MONTH_JAN",
