@@ -17,6 +17,7 @@ export class MyApp {
 
   pages: any[] = [
     { title: 'Welcome', component: 'WelcomePage' },
+	{ title: 'Vacinas', component: 'Vacinas' },
   ];
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {

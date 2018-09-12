@@ -8,9 +8,13 @@ import { IonicStorageModule, Storage } from '@ionic/storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { FileChooser } from '@ionic-native/file-chooser';
 
 import { Settings } from '../providers';
 import { MyApp } from './app.component';
+
+import { VacinasPage } from '../pages/vacinas/vacinas';
+import { VacinasAddPage } from '../pages/vacinas-add/vacinas-add';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -35,7 +39,9 @@ export function provideSettings(storage: Storage) {
 
 @NgModule({
   declarations: [
-    MyApp
+    MyApp,
+    VacinasPage,
+    VacinasAddPage
   ],
   imports: [
     BrowserModule,
@@ -52,12 +58,15 @@ export function provideSettings(storage: Storage) {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp
+    MyApp,
+    VacinasPage,
+    VacinasAddPage
   ],
   providers: [
     Camera,
     SplashScreen,
     StatusBar,
+    FileChooser,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }

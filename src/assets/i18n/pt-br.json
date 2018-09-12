@@ -64,5 +64,18 @@
   "CARDS_TITLE": "Social",
 
   "SEARCH_TITLE": "Busca",
-  "SEARCH_PLACEHOLDER": "Procure um item da lista, ex: \"Donald Duck\""
+  "SEARCH_PLACEHOLDER": "Procure um item da lista, ex: \"Donald Duck\"",
+
+  "MONTH_JAN": "Jan",
+  "MONTH_FEB": "Fev",
+  "MONTH_MAR": "Mar",
+  "MONTH_APR": "Abr",
+  "MONTH_MAY": "Mai",
+  "MONTH_JUN": "Jun",
+  "MONTH_JUL": "Jul",
+  "MONTH_AUG": "Ago",
+  "MONTH_SEP": "Set",
+  "MONTH_OCT": "Out",
+  "MONTH_NOV": "Nov",
+  "MONTH_DEC": "Dez"
 }
