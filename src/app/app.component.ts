@@ -4,7 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { Config, Nav, Platform } from 'ionic-angular';
 
-import { FirstRunPage, TestPage } from '../pages';
+import { FirstRunPage } from '../pages';
 import { Settings } from '../providers';
 import {DatabaseProvider} from "../providers/database/database";
 
@@ -17,8 +17,9 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   pages: any[] = [
+    //{ title: 'Testes', component: 'TestPage'},
     { title: 'Welcome', component: 'WelcomePage' },
-    { title: 'Teste', component: 'TestPage'}
+    { title: 'Vacinas', component: 'Vacinas' },
   ];
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen, dbProvider: DatabaseProvider) {

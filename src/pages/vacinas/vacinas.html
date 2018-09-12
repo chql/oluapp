@@ -1,0 +1,39 @@
+<ion-header>
+
+  <ion-navbar color="background">
+    <ion-title>Vacinas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let vacina of vacinas">
+            <ion-item-sliding>
+                <ion-item>
+                    <ion-avatar item-start text-center>
+                        <h6>{{ vacina.data.getDate() }}</h6>
+                        <small>{{ monthsName[vacina.data.getMonth()] }}</small>
+                    </ion-avatar>
+                    <h1 ion-text>{{ vacina.nome }}</h1>
+                    <small ion-text color="light">Toque para mais informações.</small>
+                </ion-item>
+                <ion-item-options side="right">
+                    <button ion-button color="primary">
+                        <ion-icon name="create"></ion-icon>
+                        Editar
+                    </button>
+                    <button ion-button color="danger">
+                        <ion-icon name="trash"></ion-icon>
+                        Excluir
+                    </button>
+                </ion-item-options>
+            </ion-item-sliding>
+            <ion-item *ngIf="vacina.detail === true">Details</ion-item>
+        </ion-item>
+    </ion-list>
+    <ion-fab right bottom>
+        <button ion-fab color="secondary" (click)="openAdd()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+</ion-content>
