@@ -50,19 +50,19 @@ export class WelcomePage {
         ];
       });
   }
-/*
+
   onSlideChangeStart(slider) {
     this.showSkip = !slider.isEnd();
   }
 
   ionViewDidEnter() {
     // the root left menu should be disabled on the tutorial page
-    this.menu.enable(true);
+    this.menu.enable(false);
   }
 
   ionViewWillLeave() {
     // enable the root left menu when leaving the tutorial page
     this.menu.enable(true);
   }
-*/
+
 }
