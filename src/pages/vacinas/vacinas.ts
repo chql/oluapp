@@ -60,7 +60,7 @@ export class VacinasPage {
   }
 
   attachmentName(uri) {
-	  return uri.split('/').pop();
+    return uri.nome;
   }
 
   expandView(vacina) {

@@ -13,13 +13,20 @@ export class VacinasAddPage {
   vacinaTipo : string = "";
   vacinaObservacao : string = "";
   vacinaData : string = (new Date()).toISOString();
-  vacinaAnexos : Array<string> = [];
+  vacinaAnexos : Array<any> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private fileChooser : FileChooser, private dbVacina : VacinaProvider) {
   }
 
   addAttachment() {
-      this.fileChooser.open().then(uri => this.vacinaAnexos.push(uri));
+      this.fileChooser.open().then(uri => {
+          let a = {
+            caminho: uri,
+            nome: uri.split('/').pop()
+          };
+          this.vacinaAnexos.push(a);
+        }
+      );
   }
 
   submitSave() {
@@ -35,7 +42,7 @@ export class VacinasAddPage {
 		.then(() => {
 			this.navParams.get('result').vacinaInsert = true;
 			this.navCtrl.pop();
-		}); 
+		});
   }
 
   removeAttachment(uri) {
