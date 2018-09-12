@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { VacinasAddPage } from '../vacinas-add/vacinas-add';
 import { VacinaProvider } from "../../providers/vacina/vacina";
-import { DatabaseProvider } from "../../providers/database/database";
 
 @IonicPage()
 @Component({
@@ -17,12 +16,9 @@ export class VacinasPage {
 
   monthsName : Array<string> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public translate : TranslateService, private db: DatabaseProvider) {
-    let provider = new VacinaProvider(db);
-    provider.getAll().then( vacinas => {
-      this.vacinas = vacinas;
-    });
+  addPageResult : any = { vacinaInsert : false };
 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public translate : TranslateService, private dbVacina: VacinaProvider, private toast : ToastController) {
 	translate.get([
 		"MONTH_JAN",
 		"MONTH_FEB",
@@ -52,14 +48,52 @@ export class VacinasPage {
 			months.MONTH_DEC,
 		];
 	});
+
+	this.getVacinas();
+  }
+
+  getVacinas() {
+    return this.dbVacina.getAll().then(vacinas => {
+		this.vacinas = vacinas;
+		console.log(vacinas);
+	});
+  }
+
+  attachmentName(uri) {
+	  return uri.split('/').pop();
+  }
+
+  expandView(vacina) {
+	  if(vacina.detail === undefined) {
+		  vacina.detail = true;
+	  }
+	  else {
+		  vacina.detail = !vacina.detail;
+	  }
+  }
+
+  dateFormat(rawDate) {
+	  let date = new Date(rawDate);
+	  return date.getDate() + '/' + (date.getMonth()+1) + '/' + (date.getFullYear());
+  }
+
+  getDate(str) {
+      return new Date(str);
+  }
+
+  ionViewDidEnter() {
+	  if(this.addPageResult.vacinaInsert) {
+		this.getVacinas().then(() => this.toast.create({ message: 'Vacina adicionada com sucesso', duration: 3000 }).present());
+	  }
+  }
+
+  openAdd() {
+	  this.navCtrl.push(VacinasAddPage, {result: this.addPageResult});
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad VacinasPage');
   }
 
-  openAdd() {
-	  this.navCtrl.push(VacinasAddPage);
-  }
 
 }

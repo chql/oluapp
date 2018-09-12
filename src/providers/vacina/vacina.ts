@@ -22,7 +22,7 @@ export class VacinaProvider {
       .catch((e) => console.error(e));
   }
 
-  private getAnexo(registro_id: Number){
+  private getAnexo(registro_id: Number, cb : any){
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
         let sql = 'SELECT * FROM anexo WHERE categoria_id = ? AND registro_id = ?';
@@ -35,9 +35,9 @@ export class VacinaProvider {
               for (let i = 0; i < data.rows.length; i++) {
                 anexos.push(data.rows.item(i));
               }
-              return anexos;
+              cb(anexos);
             } else {
-              return [];
+              cb([]);
             }
           })
           .catch((e) => console.error(e));
@@ -84,7 +84,7 @@ export class VacinaProvider {
               vacina.tipo = item.tipo;
               vacina.observacoes = item.observacoes;
               vacina._data_criacao = item._data_criacao;
-              vacina.anexos = this.getAnexo(id);
+              //vacina.anexos = this.getAnexo(id);
               return vacina;
             }
             return null;
@@ -97,7 +97,7 @@ export class VacinaProvider {
   public getAll() {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'SELECT * FROM vacina';
+        let sql = 'SELECT * FROM vacina ORDER BY id DESC';
         let data: any[];
         return db.executeSql(sql, data)
           .then((data: any) => {
@@ -110,6 +110,9 @@ export class VacinaProvider {
                 v.nome = t['nome'];
                 v.data = t['data'];
                 v.observacoes = t['observacoes'];
+                this.getAnexo(v.id, (anexos) => {
+                    v.anexos = anexos;
+                });
                 v.data_proxima = t['data_proxima'];
                 v.tipo = t['tipo'];
                 v.lote = t['lote'];

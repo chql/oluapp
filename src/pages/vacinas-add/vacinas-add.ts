@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { Vacina, VacinaProvider } from "../../providers/vacina/vacina";
-import { DatabaseProvider } from "../../providers/database/database";
 
 @IonicPage()
 @Component({
@@ -16,8 +15,7 @@ export class VacinasAddPage {
   vacinaData : string = (new Date()).toISOString();
   vacinaAnexos : Array<string> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private fileChooser : FileChooser, private db : DatabaseProvider) {
-    this.db = db;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private fileChooser : FileChooser, private dbVacina : VacinaProvider) {
   }
 
   addAttachment() {
@@ -25,14 +23,31 @@ export class VacinasAddPage {
   }
 
   submitSave() {
-    let v = new Vacina();
-    v.nome = this.vacinaNome;
-    v.tipo = this.vacinaTipo;
-    v.observacoes = this.vacinaObservacao;
-    v.data = new Date(this.vacinaData);
-    v.anexos = this.vacinaAnexos;
-    let provider = new VacinaProvider(this.db);
-    console.log(provider.insert(v));
+	let novaVacina = new Vacina();
+
+	novaVacina.nome        = this.vacinaNome;
+	novaVacina.tipo        = this.vacinaTipo;
+	novaVacina.observacoes = this.vacinaObservacao;
+	novaVacina.data        = new Date(this.vacinaData);
+	novaVacina.anexos      = this.vacinaAnexos;
+
+    this.dbVacina.insert(novaVacina)
+		.then(() => {
+			this.navParams.get('result').vacinaInsert = true;
+			this.navCtrl.pop();
+		}); 
+  }
+
+  removeAttachment(uri) {
+	  let idx = this.vacinaAnexos.indexOf(uri);
+	  console.log('Trying to remove attachament ' + uri + ' at idx ' + idx);
+	  if(idx != -1) {
+		  this.vacinaAnexos.splice(idx, 1);
+	  }
+  }
+
+  attachmentName(uri) {
+	  return uri.split('/').pop();
   }
 
   cancelEditing() {

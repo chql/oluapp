@@ -9,7 +9,7 @@
 
 <ion-content>
     <ion-list no-lines>
-        <ion-item><ion-title text-center>Inserir Vacina</ion-title></ion-item>
+        <ion-item><h1 ion-text text-center>Inserir Vacina</h1></ion-item>
         <ion-item>
             <ion-label floating>Nome da vacina</ion-label>
             <ion-input [(ngModel)]="vacinaNome"></ion-input>
@@ -24,11 +24,23 @@
         </ion-item>
         <ion-item>
             <ion-grid>
-                <ion-row *ngFor="let anexo of vacinaAnexos">{{ anexo }}</ion-row>
-                <ion-row><button ion-button color="primary" (click)="addAttachment()">
-                    <ion-icon name="attach"></ion-icon>
-                    <ion-icon name="add"></ion-icon>
-                </button></ion-row>
+                <ion-row *ngFor="let anexo of vacinaAnexos">
+                    <ion-col>
+                        <ion-badge color="light" text-center>
+                            <ion-icon name="attach"></ion-icon>
+                            {{ attachmentName(anexo) }}
+                            <button ion-button color="danger" (click)="removeAttachment(anexo)">
+                                <ion-icon name="trash"></ion-icon>
+                            </button>
+                        </ion-badge>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <button ion-button color="primary" (click)="addAttachment()">
+                        <ion-icon name="attach"></ion-icon>
+                        <ion-icon name="add"></ion-icon>
+                    </button>
+                </ion-row>
             </ion-grid>
         </ion-item>
         <ion-item>
