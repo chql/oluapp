@@ -11,12 +11,20 @@
           <ion-input type="text" [(ngModel)]="vacina.tipo" name="tipo"></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label floating>Lote</ion-label>
+          <ion-input type="text" [(ngModel)]="vacina.lote" name="lote"></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label floating>Observações</ion-label>
           <ion-input type="text" [(ngModel)]="vacina.observacoes" name="observacoes"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label floating>Data</ion-label>
           <ion-input type="date" [(ngModel)]="vacina.data" name="data"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Data-Proxima</ion-label>
+          <ion-input type="date" [(ngModel)]="vacina.data_proxima" name="data_proxima"></ion-input>
         </ion-item>
         <ion-item>
           <button ion-button type="submit" block>Salvar</button>

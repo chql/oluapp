@@ -34,13 +34,24 @@ export class DatabaseProvider {
   private createTables(db: SQLiteObject) {
     // Criando as tabelas
     db.sqlBatch([
-      ['CREATE TABLE IF NOT EXISTS vacina (' +
-        'id integer primary key AUTOINCREMENT NOT NULL, ' +
-        'nome TEXT, ' +
-        'tipo TEXT, ' +
-        'data Date, ' +
-        'observacoes TEXT' +
-      ')'],
+      [`CREATE TABLE IF NOT EXISTS vacina (
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        nome VARCHAR(64) NOT NULL,
+        tipo VARCHAR(64),
+        lote VARCHAR(16),
+        observacoes TEXT,
+        data DATE NOT NULL,
+        data_proxima DATE,
+        _data_criacao DATETIME DEFAULT current_timestamp NOT NULL
+        );`],
+      [`CREATE TABLE IF NOT EXISTS anexo (
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        nome VARCHAR(256) NOT NULL,
+        caminho VARCHAR(256) NOT NULL,
+        categoria_id INTEGER NOT NULL,
+        registro_id INTEGER NOT NULL,
+        _data_criacao DATETIME DEFAULT current_timestamp NOT NULL
+       );`]
     ])
       .then(() => console.log('Tabelas criadas'))
       .catch(e => console.error('Erro ao criar as tabelas', e));
