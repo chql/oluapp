@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-
+import { FileOpener } from '@ionic-native/file-opener';
+import { File, Entry, FileEntry } from '@ionic-native/file';
 import { VacinasAddPage } from '../vacinas-add/vacinas-add';
 import { VacinaProvider } from "../../providers/vacina/vacina";
 
@@ -18,7 +19,7 @@ export class VacinasPage {
 
   addPageResult : any = { vacinaInsert : false };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public translate : TranslateService, private dbVacina: VacinaProvider, private toast : ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public translate : TranslateService, private dbVacina: VacinaProvider, private toast : ToastController, private fOpener: FileOpener, private file : File) {
 	translate.get([
 		"MONTH_JAN",
 		"MONTH_FEB",
@@ -57,6 +58,19 @@ export class VacinasPage {
 		this.vacinas = vacinas;
 		console.log(vacinas);
 	});
+  }
+
+  openAttachment(a){
+    return this.file.resolveLocalFilesystemUrl(a.caminho).then ( (entry:Entry) => {
+      if(entry){
+        let fentry = entry as FileEntry;
+        fentry.file(success => {
+          this.fOpener.open(a.caminho, success.type).then(()=> console.log('Abriu'))
+        }, error =>{
+          console.log(error);
+        })
+      }
+    });
   }
 
   attachmentName(uri) {

@@ -50,12 +50,10 @@
                     </ion-row>
                     <ion-row>
                         <ion-col *ngFor="let anexo of vacina.anexos">
-                          <a href="{{anexo.caminho}}">
-                            <ion-badge color="light" text-center>
+                            <ion-badge color="light" text-center (click)="openAttachment(anexo)">
                                 <ion-icon name="attach"></ion-icon>
                               {{ attachmentName(anexo) }}
                             </ion-badge>
-                          </a>
                         </ion-col>
                     </ion-row>
                 </ion-grid>

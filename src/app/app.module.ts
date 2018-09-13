@@ -11,7 +11,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
 import { FileOpener } from '@ionic-native/file-opener';
-
+import { File } from '@ionic-native/file';
 import { Settings } from '../providers';
 import { MyApp } from './app.component';
 import { SQLite } from "@ionic-native/sqlite";
@@ -74,6 +74,7 @@ export function provideSettings(storage: Storage) {
     FileChooser,
     FilePath,
     FileOpener,
+    File,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
