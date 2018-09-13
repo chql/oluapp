@@ -95,5 +95,4 @@ export class VacinasPage {
     console.log('ionViewDidLoad VacinasPage');
   }
 
-
 }

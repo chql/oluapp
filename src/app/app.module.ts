@@ -9,6 +9,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { FileChooser } from '@ionic-native/file-chooser';
+import { FilePath } from '@ionic-native/file-path';
+import { FileOpener } from '@ionic-native/file-opener';
 
 import { Settings } from '../providers';
 import { MyApp } from './app.component';
@@ -70,6 +72,8 @@ export function provideSettings(storage: Storage) {
     SplashScreen,
     StatusBar,
     FileChooser,
+    FilePath,
+    FileOpener,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },

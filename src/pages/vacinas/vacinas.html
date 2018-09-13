@@ -13,7 +13,7 @@
             <ion-item-sliding (click)="expandView(vacina)">
                 <ion-item>
                     <ion-avatar item-start text-center>
-                        <h6 ion-text>{{ getDate(vacina.data).getMonth() }}</h6>
+                        <h6 ion-text>{{ getDate(vacina.data).getDate() }}</h6>
                         <small ion-text>{{ monthsName[getDate(vacina.data).getMonth()] }}</small>
                     </ion-avatar>
                     <h1 ion-text>{{ vacina.nome }}</h1>
@@ -50,10 +50,12 @@
                     </ion-row>
                     <ion-row>
                         <ion-col *ngFor="let anexo of vacina.anexos">
+                          <a href="{{anexo.caminho}}">
                             <ion-badge color="light" text-center>
                                 <ion-icon name="attach"></ion-icon>
-                                {{ attachmentName(anexo) }}
+                              {{ attachmentName(anexo) }}
                             </ion-badge>
+                          </a>
                         </ion-col>
                     </ion-row>
                 </ion-grid>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { Vacina, VacinaProvider } from "../../providers/vacina/vacina";
+import { FilePath } from '@ionic-native/file-path';
 
 @IonicPage()
 @Component({
@@ -15,16 +16,19 @@ export class VacinasAddPage {
   vacinaData : string = (new Date()).toISOString();
   vacinaAnexos : Array<any> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private fileChooser : FileChooser, private dbVacina : VacinaProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private fileChooser : FileChooser, private dbVacina : VacinaProvider, private path : FilePath) {
   }
 
   addAttachment() {
       this.fileChooser.open().then(uri => {
+        this.path.resolveNativePath(uri).then(p => {
+          console.log('Resolved attachment path to ' + p);
           let a = {
-            caminho: uri,
-            nome: uri.split('/').pop()
+            caminho: p,
+            nome: p.split('/').pop()
           };
           this.vacinaAnexos.push(a);
+        });
         }
       );
   }
