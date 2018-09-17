@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SQLiteObject } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../database/database';
-import {DateTime} from "ionic-angular";
+import { DateTime } from "ionic-angular";
 
 const CATEGORIA = 1;
 
@@ -66,32 +66,36 @@ export class VacinaProvider {
   }
 
   public get(id: number) {
-    return this.dbProvider.getDB()
-      .then((db: SQLiteObject) => {
-        let sql = 'SELECT * FROM vacina WHERE id = ?';
-        let data = [id];
-
-        return db.executeSql(sql, data)
-          .then((data: any) => {
-            if (data.rows.length > 0) {
-              let item = data.rows.item(0);
-              let vacina = new Vacina();
-              vacina.id = item.id;
-              vacina.nome = item.nome;
-              vacina.lote = item.lote;
-              vacina.data = item.data;
-              vacina.data_proxima = item.data_proxima;
-              vacina.tipo = item.tipo;
-              vacina.observacoes = item.observacoes;
-              vacina._data_criacao = item._data_criacao;
-              //vacina.anexos = this.getAnexo(id);
-              return vacina;
-            }
-            return null;
-          })
-          .catch((e) => console.error(e));
-      })
-      .catch((e) => console.error(e));
+    return new Promise<Vacina>(resolve => {
+      this.dbProvider.getDB()
+        .then((db: SQLiteObject) => {
+          let sql = 'SELECT * FROM vacina WHERE id = ?';
+          let data = [id];
+          return db.executeSql(sql, data).then((data: any) => {
+              if (data.rows.length > 0) {
+                let item = data.rows.item(0);
+                let vacina = new Vacina();
+                vacina.id = item.id;
+                vacina.nome = item.nome;
+                vacina.lote = item.lote;
+                vacina.data = new Date(item.data);
+                vacina.data_proxima = item.data_proxima;
+                vacina.tipo = item.tipo;
+                vacina.observacoes = item.observacoes;
+                vacina._data_criacao = item._data_criacao;
+                this.getAnexo(vacina.id, (anexos) => {
+                  vacina.anexos = anexos;
+                  resolve(vacina);
+                });
+              }
+              else {
+                resolve(null);
+              }
+            })
+            .catch((e) => console.error(e));
+        })
+        .catch((e) => console.error(e));
+    });
   }
 
   public getAll() {
@@ -133,6 +137,14 @@ export class VacinaProvider {
         console.error(e);
         return [];
       });
+  }
+
+  delete(id : number) {
+    return new Promise<null>((resolve) => {
+      this.dbProvider.getDB().then((db : SQLiteObject) => {
+        db.executeSql('DELETE FROM vacina WHERE id = ?', [id]).then(() => resolve());
+      });
+    });
   }
 }
 

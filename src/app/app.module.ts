@@ -19,7 +19,7 @@ import { DatabaseProvider } from '../providers/database/database';
 import { VacinaProvider } from '../providers/vacina/vacina';
 
 import { VacinasPage } from '../pages/vacinas/vacinas';
-import { VacinasAddPage } from '../pages/vacinas-add/vacinas-add';
+import { VacinasEditPage } from '../pages/vacinas-edit/vacinas-edit';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -46,7 +46,7 @@ export function provideSettings(storage: Storage) {
   declarations: [
     MyApp,
     VacinasPage,
-    VacinasAddPage
+    VacinasEditPage
   ],
   imports: [
     BrowserModule,
@@ -65,7 +65,7 @@ export function provideSettings(storage: Storage) {
   entryComponents: [
     MyApp,
     VacinasPage,
-    VacinasAddPage
+    VacinasEditPage
   ],
   providers: [
     Camera,

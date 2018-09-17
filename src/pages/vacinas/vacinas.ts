@@ -1,82 +1,86 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FileOpener } from '@ionic-native/file-opener';
-import { File, Entry, FileEntry } from '@ionic-native/file';
-import { VacinasAddPage } from '../vacinas-add/vacinas-add';
+import { File, FileEntry } from '@ionic-native/file';
+import { VacinasEditPage } from '../vacinas-edit/vacinas-edit';
 import { VacinaProvider } from "../../providers/vacina/vacina";
+import { AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
   selector: 'page-vacinas',
   templateUrl: 'vacinas.html',
 })
+/**
+ * Componente de controle para visualizacao, e exclusao de vacinas.
+ */
 export class VacinasPage {
 
+  /**
+   * Armazenas todas as vacinas visiveis.
+   */
   vacinas : Array<any> = [];
 
-  monthsName : Array<string> = [];
+  /**
+   * Estrutura auxiliar para comunicacao com a pagina de edicao.
+   */
+  editPageResult : any = { result : false, message: '' };
 
-  addPageResult : any = { vacinaInsert : false };
+  /**
+   * Textos para exibicao de meses na interface.
+   */
+  monthsName : Array<string> = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public translate : TranslateService, private dbVacina: VacinaProvider, private toast : ToastController, private fOpener: FileOpener, private file : File) {
-	translate.get([
-		"MONTH_JAN",
-		"MONTH_FEB",
-		"MONTH_MAR",
-		"MONTH_APR",
-		"MONTH_MAY",
-		"MONTH_JUN",
-		"MONTH_JUL",
-		"MONTH_AUG",
-		"MONTH_SEP",
-		"MONTH_OCT",
-		"MONTH_NOV",
-		"MONTH_DEC",
-	]).subscribe((months) => {
-		this.monthsName = [
-			months.MONTH_JAN,
-			months.MONTH_FEB,
-			months.MONTH_MAR,
-			months.MONTH_APR,
-			months.MONTH_MAY,
-			months.MONTH_JUN,
-			months.MONTH_JUL,
-			months.MONTH_AUG,
-			months.MONTH_SEP,
-			months.MONTH_OCT,
-			months.MONTH_NOV,
-			months.MONTH_DEC,
-		];
-	});
-
-	this.getVacinas();
+  /**
+   *
+   * @param navCtrl Para navegar para pagina de edicao.
+   * @param translate Obtencao de mensagens da interface.
+   * @param dbVacina Recuperar e alterar dados de vacinas.
+   * @param toast Exibicao de mensagens ao modificar uma vacina.
+   * @param alert Confirmacao de exclusao.
+   * @param fOpener Exibicao de anexos.
+   * @param file Metadados de anexos.
+   */
+  constructor(public navCtrl: NavController,
+              public translate : TranslateService,
+              private dbVacina: VacinaProvider,
+              private toast : ToastController,
+              private alert : AlertController,
+              private fOpener: FileOpener,
+              private file : File) {
+	  this.getVacinas();
   }
 
+  /**
+   * Busca todas as vacinas disponiveis no banco de dados.
+   * Sempre que o usuario entrar ou voltar para tela de exibicao.
+   */
   getVacinas() {
-    return this.dbVacina.getAll().then(vacinas => {
-		this.vacinas = vacinas;
-		console.log(vacinas);
-	});
+    return this.dbVacina.getAll().then(vacinas => this.vacinas = vacinas);
   }
 
-  openAttachment(a){
-    return this.file.resolveLocalFilesystemUrl(a.caminho).then ( (entry:Entry) => {
-      if(entry){
-        let fentry = entry as FileEntry;
-        fentry.file(success => {
-          this.fOpener.open(a.caminho, success.type).then(()=> console.log('Abriu'))
-        }, error =>{
-          console.log(error);
-        })
-      }
+  /**
+   * Exibe um anexo ao clicar nele nos detalhes de uma vacina.
+   * @param anexo
+   */
+  openAttachment(anexo : any){
+    return this.file.resolveLocalFilesystemUrl(anexo.caminho)
+      .then ((entry : FileEntry) => {
+        if(entry){
+          entry.file(meta => {
+            this.fOpener.open(anexo.caminho, meta.type).then(()=> console.log('Abriu'))
+          }, error =>{
+            console.log(error);
+          })
+        }
     });
   }
 
-  attachmentName(uri) {
-    return uri.nome;
-  }
-
+  /**
+   * Expande a visualizacao detalhada de uma vacina ao clicar sobre o item.
+   * @param vacina
+   */
   expandView(vacina) {
 	  if(vacina.detail === undefined) {
 		  vacina.detail = true;
@@ -86,27 +90,85 @@ export class VacinasPage {
 	  }
   }
 
-  dateFormat(rawDate) {
+  /**
+   * Formata a data de aplicacao da vacina para exibicao.
+   * @param rawDate
+   */
+  dateFormat(rawDate : string) {
 	  let date = new Date(rawDate);
 	  return date.getDate() + '/' + (date.getMonth()+1) + '/' + (date.getFullYear());
   }
 
-  getDate(str) {
-      return new Date(str);
+  /**
+   * Retorna estrutura detalhada para uma data.
+   * @param str
+   */
+  getDate(str : string) {
+    return new Date(str);
   }
 
-  ionViewDidEnter() {
-	  if(this.addPageResult.vacinaInsert) {
-		this.getVacinas().then(() => this.toast.create({ message: 'Vacina adicionada com sucesso', duration: 3000 }).present());
-	  }
-  }
-
+  /**
+   * Abre a pagina de edicao para adicao de uma nova vacina.
+   */
   openAdd() {
-	  this.navCtrl.push(VacinasAddPage, {result: this.addPageResult});
+	  this.navCtrl.push(VacinasEditPage, {result: this.editPageResult});
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad VacinasPage');
+  /**
+   * Abre a pagina de edicao para editar uma vacina ja existente.
+   * @param id
+   */
+  openEdit(id : number) {
+    this.navCtrl.push(VacinasEditPage, {
+      result: this.editPageResult,
+      vacinaId: id
+    });
   }
 
+  /**
+   * Confirma e exclui uma vacina selecionada pelo usuario.
+   * @param id
+   */
+  openDelete(id : number) {
+    this.alert.create({
+      title: 'Confirmação',
+      message: 'Tem certeza que deseja excluir essa vacina?',
+      buttons: [
+        {
+          text: 'Cancelar',
+        },
+        {
+          text: 'Excluir',
+          handler: () => {
+            this.dbVacina.delete(id).then(() => {
+              let idx = -1;
+              for(let i = 0; i < this.vacinas.length; i++) {
+                if(this.vacinas[i].id == id) {
+                  idx = i;
+                  break;
+                }
+              }
+              if(idx != -1) {
+                this.vacinas.splice(idx, 1);
+              }
+            });
+          }
+        }
+      ]
+    }).present();
+  }
+
+  /**
+   * Metodo executado sempre que a pagina aberta ou fechada.
+   * Caso esteja retornando da tela de edicao exibe mensagem do resultado.
+   */
+  ionViewDidEnter() {
+    if(this.editPageResult.result) {
+      this.getVacinas().then(() => this.toast.create({
+        message: this.editPageResult.message,
+        duration: 3000
+      }).present());
+      this.editPageResult.result = false;
+    }
+  }
 }

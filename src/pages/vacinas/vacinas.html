@@ -10,8 +10,8 @@
 <ion-content>
     <ion-list no-lines>
         <ion-item *ngFor="let vacina of vacinas">
-            <ion-item-sliding (click)="expandView(vacina)">
-                <ion-item>
+            <ion-item-sliding>
+                <ion-item (click)="expandView(vacina)">
                     <ion-avatar item-start text-center>
                         <h6 ion-text>{{ getDate(vacina.data).getDate() }}</h6>
                         <small ion-text>{{ monthsName[getDate(vacina.data).getMonth()] }}</small>
@@ -21,11 +21,11 @@
                     <small ion-text color="light" *ngIf="vacina.detail === true">Toque para esconder detalhes.</small>
                 </ion-item>
                 <ion-item-options side="right">
-                    <button ion-button color="primary">
+                    <button ion-button color="primary" (click)="openEdit(vacina.id)">
                         <ion-icon name="create"></ion-icon>
                         Editar
                     </button>
-                    <button ion-button color="danger">
+                    <button ion-button color="danger" (click)="openDelete(vacina.id)">
                         <ion-icon name="trash"></ion-icon>
                         Excluir
                     </button>
@@ -52,7 +52,7 @@
                         <ion-col *ngFor="let anexo of vacina.anexos">
                             <ion-badge color="light" text-center (click)="openAttachment(anexo)">
                                 <ion-icon name="attach"></ion-icon>
-                              {{ attachmentName(anexo) }}
+                              {{ anexo.nome }}
                             </ion-badge>
                         </ion-col>
                     </ion-row>
