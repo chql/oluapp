@@ -54,6 +54,12 @@ export class VacinasEditPage {
   pageResult : any = { result: false, message: '' };
 
   /**
+   * Armazena o estado do formulario.
+   * Campos insuficientes ou invalidos.
+   */
+  formValid : boolean = false;
+
+  /**
    *
    * @param navCtrl Para retornar ao finalizar edicao.
    * @param navParams Parametros de resultado da edicao.
@@ -117,13 +123,14 @@ export class VacinasEditPage {
 
     if(this.vacinaId) {
       // TODO: salvar dados da vacina modificada
-      this.pageResult.result = true;
-      this.pageResult.message = 'Vacina alterada com sucesso!';
-      this.navCtrl.pop();
+      // this.dbVacina.save(novaVacina).then(() => {
+        this.pageResult.result = true;
+        this.pageResult.message = 'Vacina alterada com sucesso!';
+        this.navCtrl.pop();
+      // });
     }
     else {
-      this.dbVacina.insert(novaVacina)
-        .then(() => {
+      this.dbVacina.insert(novaVacina).then(() => {
           this.pageResult.result = true;
           this.pageResult.message = 'Vacina adicionada com sucesso!';
           this.navCtrl.pop();
@@ -144,11 +151,20 @@ export class VacinasEditPage {
   }
 
   /**
-   * Resolve o nome de uma anexo.
+   * Resolve o nome de um anexo.
    * @param uri
    */
   attachmentName(uri : string) {
 	  return uri.split('/').pop();
+  }
+
+  /**
+   * Atualiza o estado do formulario.
+   */
+  formStateUpdate() {
+    this.formValid
+      = (this.vacinaNome.length > 0)
+      && (this.vacinaTipo.length > 0);
   }
 
   /**

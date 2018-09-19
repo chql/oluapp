@@ -142,7 +142,10 @@ export class VacinaProvider {
   delete(id : number) {
     return new Promise<null>((resolve) => {
       this.dbProvider.getDB().then((db : SQLiteObject) => {
-        db.executeSql('DELETE FROM vacina WHERE id = ?', [id]).then(() => resolve());
+        db.executeSql('DELETE FROM vacina WHERE id = ?', [id]).then(() => {
+          db.executeSql('DELETE FROM anexo WHERE categoria_id = ? and registro_id = ?', [CATEGORIA, id])
+            .then(() => resolve());
+        });
       });
     });
   }

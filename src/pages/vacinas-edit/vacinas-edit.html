@@ -6,17 +6,16 @@
 
 </ion-header>
 
-
 <ion-content>
     <ion-list no-lines>
         <ion-item><h1 ion-text text-center>Inserir Vacina</h1></ion-item>
         <ion-item>
-            <ion-label floating>Nome da vacina</ion-label>
-            <ion-input [(ngModel)]="vacinaNome"></ion-input>
+            <ion-label floating>Nome da vacina *</ion-label>
+            <ion-input [(ngModel)]="vacinaNome" (input)="formStateUpdate()"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>Tipo da vacina</ion-label>
-            <ion-input [(ngModel)]="vacinaTipo"></ion-input>
+            <ion-label floating>Tipo da vacina *</ion-label>
+            <ion-input [(ngModel)]="vacinaTipo" (input)="formStateUpdate()"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Observações</ion-label>
@@ -36,7 +35,7 @@
                     </ion-col>
                 </ion-row>
                 <ion-row>
-                    <button ion-button color="primary" (click)="addAttachment()">
+                    <button ion-button icon-only color="primary" (click)="addAttachment()">
                         <ion-icon name="attach"></ion-icon>
                         <ion-icon name="add"></ion-icon>
                     </button>
@@ -50,7 +49,7 @@
         <ion-item>
             <ion-grid>
                 <ion-row>
-                    <ion-col><button ion-button full color="secondary" (click)="submitSave()">Salvar</button></ion-col>
+                    <ion-col><button ion-button full color="secondary" (click)="submitSave()" [disabled]="!formValid">Salvar</button></ion-col>
                     <ion-col><button ion-button full color="danger" (click)="cancelEditing()">Cancelar</button></ion-col>
                 </ion-row>
             </ion-grid>

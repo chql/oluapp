@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FileOpener } from '@ionic-native/file-opener';
 import { File, FileEntry } from '@ionic-native/file';
 import { VacinasEditPage } from '../vacinas-edit/vacinas-edit';
 import { VacinaProvider } from "../../providers/vacina/vacina";
-import { AlertController } from 'ionic-angular';
+import { AlertController, Searchbar } from 'ionic-angular';
+import { timer } from 'rxjs/observable/timer';
 
 @IonicPage()
 @Component({
@@ -31,6 +32,21 @@ export class VacinasPage {
    * Textos para exibicao de meses na interface.
    */
   monthsName : Array<string> = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+
+  /**
+   * Modo de busca ativdao
+   */
+  searchMode : boolean = false;
+
+  /**
+   * Conteudo da busca
+   */
+  search : string = '';
+
+  /**
+   * Componentes de interface
+   */
+  @ViewChild('qinput') searchInput : Searchbar;
 
   /**
    *
@@ -156,6 +172,51 @@ export class VacinasPage {
         }
       ]
     }).present();
+  }
+
+  /**
+   * Atualiza os resultados de busca de acordo com o campo de busca.
+   */
+  loadSearchResults() {
+    if(this.searchMode && this.search.length > 0) {
+      // TODO: Implement database search
+      // this.dbVacina.search(this.search).then(resultados => {
+        if(this.searchMode) {
+        // this.vacinas = resultados;
+          timer(3000).subscribe(this.loadSearchResults);
+        }
+      //});
+    }
+  }
+
+  /**
+   * Entra em modo de busca.
+   * Elementos da barra de navegacao e botao de adicionar sao ocultados.
+   */
+  enterSearchMode() {
+    this.searchMode = true;
+    timer(500).subscribe(() => {
+      this.searchInput.setFocus();
+      this.loadSearchResults();
+    });
+  }
+
+  /**
+   * Sai do modo de busca.
+   * Barra de navegacao e botoes voltam ao estado normal.
+   * Buscas pendentes sao canceladas.
+   */
+  leaveSearchMode() {
+    this.searchMode = false;
+    this.search = '';
+    this.getVacinas();
+  }
+
+  /**
+   * Retorna para o menu inicial.
+   */
+  navBack() {
+    this.navCtrl.pop();
   }
 
   /**
