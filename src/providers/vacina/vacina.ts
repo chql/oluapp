@@ -149,6 +149,60 @@ export class VacinaProvider {
       });
     });
   }
+
+  public save(v:Vacina, id:number){
+    return this.delete(id).then( () => {
+      return this.insert(v);
+    }).catch((e) => {
+      console.error(e);
+    })
+  }
+
+  public search(query:string){
+    return this.dbProvider.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = `SELECT * FROM vacina 
+        WHERE nome LIKE ? OR tipo LIKE ? OR observacoes LIKE ?
+        ORDER BY id DESC`;
+        query = '%' + query + '%';
+        console.log(query);
+        return db.executeSql(sql, [query, query, query])
+          .then((data: any) => {
+            if (data.rows.length > 0) {
+              console.log(data);
+              let vacinas: any[] = [];
+              for (let i = 0; i < data.rows.length; i++) {
+                let v = new Vacina();
+                let t = data.rows.item(i);
+                v.id = t['id'];
+                v.nome = t['nome'];
+                v.data = t['data'];
+                v.observacoes = t['observacoes'];
+                this.getAnexo(v.id, (anexos) => {
+                  v.anexos = anexos;
+                });
+                v.data_proxima = t['data_proxima'];
+                v.tipo = t['tipo'];
+                v.lote = t['lote'];
+                v._data_criacao = t['_data_criacao'];
+                vacinas.push(v);
+              }
+              return vacinas;
+            } else {
+              return [];
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+            return [];
+          });
+      })
+      .catch((e) => {
+        console.error(e);
+        return [];
+      });
+
+  }
 }
 
 export class Vacina {

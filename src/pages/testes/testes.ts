@@ -28,32 +28,10 @@ export class TestPage {
   }
 
   save () {
-    let v = new Vacina();
-    v.nome = this.vacina['nome'];
-    v.tipo = this.vacina['tipo'];
-    v.data = this.vacina['data'];
-    v.observacoes = this.vacina['observacoes'];
-    v.data_proxima = this.vacina['data_proxima'];
-    v.lote = this.vacina['lote'];
-    v.anexos = [
-      {
-        caminho: "/sdcard/storage/caralha/demonio",
-        nome: "satanas1.jpeg"
-      },
-      {
-        caminho: "/sdcard/storage/caralha/demonio",
-        nome: "satanas2.jpeg"
-      }
-    ];
-    let save = new VacinaProvider(this.db);
-    console.info("Insert");
-    console.log(save.insert(v));
-    console.info("this.vacina");
-    console.log(this.vacina);
-    console.info("getAll");
-    console.log(save.getAll());
-    console.info("get2");
-    console.log(save.get(2));
+    let v = new VacinaProvider(this.db);
+    v.search(this.vacina['nome']).then((d) => {
+      console.log(d);
+    });
   }
   /*
     onSlideChangeStart(slider) {

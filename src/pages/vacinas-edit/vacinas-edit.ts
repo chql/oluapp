@@ -122,12 +122,11 @@ export class VacinasEditPage {
     novaVacina.anexos      = this.vacinaAnexos;
 
     if(this.vacinaId) {
-      // TODO: salvar dados da vacina modificada
-      // this.dbVacina.save(novaVacina).then(() => {
+      this.dbVacina.save(novaVacina, this.vacinaId).then(() => {
         this.pageResult.result = true;
         this.pageResult.message = 'Vacina alterada com sucesso!';
         this.navCtrl.pop();
-      // });
+      });
     }
     else {
       this.dbVacina.insert(novaVacina).then(() => {

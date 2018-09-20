@@ -178,14 +178,14 @@ export class VacinasPage {
    * Atualiza os resultados de busca de acordo com o campo de busca.
    */
   loadSearchResults() {
-    if(this.searchMode && this.search.length > 0) {
-      // TODO: Implement database search
-      // this.dbVacina.search(this.search).then(resultados => {
-        if(this.searchMode) {
-        // this.vacinas = resultados;
-          timer(3000).subscribe(this.loadSearchResults);
-        }
-      //});
+    if(this.searchMode){
+      //console.log('search: ' + this.search);
+      if(this.search.length > 0) {
+        this.dbVacina.search(this.search).then(resultados => {
+          this.vacinas = resultados;
+        });
+      }
+      timer(3000).subscribe(this.loadSearchResults);
     }
   }
 
