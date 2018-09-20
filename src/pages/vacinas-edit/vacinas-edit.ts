@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
 
@@ -54,21 +54,17 @@ export class VacinasEditPage {
   pageResult : any = { result: false, message: '' };
 
   /**
-   * Armazena o estado do formulario.
-   * Campos insuficientes ou invalidos.
-   */
-  formValid : boolean = false;
-
-  /**
    *
    * @param navCtrl Para retornar ao finalizar edicao.
    * @param navParams Parametros de resultado da edicao.
    * @param fileChooser Dialogo para adicao de anexos.
    * @param dbVacina Acesso aos dados da vacina.
    * @param path Resolve caminho de anexos apos selecao do usuario.
+   * @param alert Exibe mensagem em caso de campos insuficientes.
    */
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
+              public alert : AlertController,
               private fileChooser : FileChooser,
               private dbVacina : VacinaProvider,
               private path : FilePath) {
@@ -109,10 +105,42 @@ export class VacinasEditPage {
   }
 
   /**
+   * Verifica e notifica sobre campos obrigatorios.
+   */
+  formValidate() {
+    let hasError : boolean = false;
+    let message  : string = '';
+
+    if(this.vacinaTipo.length < 1) {
+      hasError = true;
+      message = 'Preencha o tipo da vacina';
+    }
+
+    if(this.vacinaNome.length < 1) {
+      hasError = true;
+      message = 'Preencha o nome da vacina';
+    }
+
+    if(hasError) {
+      this.alert.create({
+        title: 'Erro',
+        subTitle: message,
+        buttons: ['OK']
+      }).present();
+    }
+
+    return !hasError;
+  }
+
+  /**
    * Salva os dados da vacina que foi adicionada ou modificada.
    * Preenche o resultado da adicao/modificacao e retorna para tela anterior.
    */
   submitSave() {
+    if(!this.formValidate()) {
+      return;
+    }
+
     let novaVacina = new Vacina();
 
     novaVacina.nome        = this.vacinaNome;
@@ -155,15 +183,6 @@ export class VacinasEditPage {
    */
   attachmentName(uri : string) {
 	  return uri.split('/').pop();
-  }
-
-  /**
-   * Atualiza o estado do formulario.
-   */
-  formStateUpdate() {
-    this.formValid
-      = (this.vacinaNome.length > 0)
-      && (this.vacinaTipo.length > 0);
   }
 
   /**

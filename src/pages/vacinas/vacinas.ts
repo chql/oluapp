@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FileOpener } from '@ionic-native/file-opener';
 import { File, FileEntry } from '@ionic-native/file';
@@ -44,6 +44,11 @@ export class VacinasPage {
   search : string = '';
 
   /**
+   * Referencia para restaurar o comportamento do botao voltar.
+   */
+  restoreBackButton : Function = null;
+
+  /**
    * Componentes de interface
    */
   @ViewChild('qinput') searchInput : Searchbar;
@@ -51,6 +56,7 @@ export class VacinasPage {
   /**
    *
    * @param navCtrl Para navegar para pagina de edicao.
+   * @param platform Controle do botao voltar.
    * @param translate Obtencao de mensagens da interface.
    * @param dbVacina Recuperar e alterar dados de vacinas.
    * @param toast Exibicao de mensagens ao modificar uma vacina.
@@ -59,6 +65,7 @@ export class VacinasPage {
    * @param file Metadados de anexos.
    */
   constructor(public navCtrl: NavController,
+              public platform : Platform,
               public translate : TranslateService,
               private dbVacina: VacinaProvider,
               private toast : ToastController,
@@ -178,14 +185,13 @@ export class VacinasPage {
    * Atualiza os resultados de busca de acordo com o campo de busca.
    */
   loadSearchResults() {
-    if(this.searchMode){
-      //console.log('search: ' + this.search);
+    console.log('search: ' + this.search);
+    if(this.searchMode) {
       if(this.search.length > 0) {
         this.dbVacina.search(this.search).then(resultados => {
           this.vacinas = resultados;
         });
       }
-      timer(3000).subscribe(this.loadSearchResults);
     }
   }
 
@@ -198,6 +204,8 @@ export class VacinasPage {
     timer(500).subscribe(() => {
       this.searchInput.setFocus();
       this.loadSearchResults();
+      this.restoreBackButton =
+        this.platform.registerBackButtonAction(() => this.leaveSearchMode(), 666);
     });
   }
 
@@ -210,6 +218,10 @@ export class VacinasPage {
     this.searchMode = false;
     this.search = '';
     this.getVacinas();
+    if(this.restoreBackButton) {
+      this.restoreBackButton();
+      this.restoreBackButton = null;
+    }
   }
 
   /**

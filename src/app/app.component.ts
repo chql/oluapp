@@ -18,8 +18,8 @@ export class MyApp {
 
   pages: any[] = [
     //{ title: 'Testes', component: 'TestPage'},
-    { title: 'Welcome', component: 'WelcomePage' },
-    { title: 'Vacinas', component: 'Vacinas' },
+    { title: 'Principal', component: 'WelcomePage' },
+    { title: 'Vacinas', component: 'VacinasPage' },
   ];
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen, dbProvider: DatabaseProvider) {

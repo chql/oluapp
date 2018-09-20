@@ -1,11 +1,13 @@
-<ion-header>
+<ion-header *ngIf="searchMode">
+  <ion-searchbar #qinput [(ngModel)]="search" (ionInput)="loadSearchResults()" (ionCancel)="leaveSearchMode()" showCancelButton="true" class="vacina-searchbar"></ion-searchbar>
+</ion-header>
 
-  <ion-navbar color="background" *ngIf="!searchMode" hideBackButton="true">
-      <ion-buttons left>
-        <button ion-button icon-only (click)="navBack()" class="back-button bar-button bar-button-md back-button-md bar-button-default bar-button-default-md show-back-button">
-            <ion-icon name="arrow-back"></ion-icon>
-        </button>
-      </ion-buttons>
+<ion-header *ngIf="!searchMode">
+
+  <ion-navbar color="background" hideBackButton="true">
+    <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Vacinas</ion-title>
     <ion-buttons end>
         <button ion-button icon-only (click)="enterSearchMode()">
@@ -14,8 +16,6 @@
     </ion-buttons>
   </ion-navbar>
 
-  <ion-searchbar #qinput *ngIf="searchMode" [(ngModel)]="search" (ionCancel)="leaveSearchMode()" showCancelButton="true" large></ion-searchbar>
-
 </ion-header>
 
 <ion-content>
@@ -23,7 +23,7 @@
         <ion-item *ngFor="let vacina of vacinas">
             <ion-item-sliding>
                 <ion-item (click)="expandView(vacina)">
-                    <ion-avatar item-start text-center style="background-color: #a0a0a0; border-radius: 50%;">
+                    <ion-avatar item-start text-center class="vacina-item-avatar">
                         <h6 ion-text>{{ getDate(vacina.data).getDate() }}</h6>
                         <small ion-text>{{ monthsName[getDate(vacina.data).getMonth()] }}</small>
                     </ion-avatar>
