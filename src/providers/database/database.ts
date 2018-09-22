@@ -56,4 +56,11 @@ export class DatabaseProvider {
       .then(() => console.log('Tabelas criadas'))
       .catch(e => console.error('Erro ao criar as tabelas', e));
   }
+
+  public formatDate(d: Date){
+    if (d !== undefined)
+        return d.getUTCFullYear() + '-' + (d.getUTCMonth() + 1) + '-' + d.getUTCDate();
+    else
+      return null;
+  }
 }
