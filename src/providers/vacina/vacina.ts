@@ -45,7 +45,7 @@ export class VacinaProvider {
       .catch((e) => console.error(e));
   }
 
-  public insert(vacina: Vacina) {
+  public insert(vacina: Vacina, id: number) {
     return new Promise<number> ( (resolve) => {
       this.dbProvider.getDB()
         .then((db: SQLiteObject) => {
@@ -55,6 +55,9 @@ export class VacinaProvider {
               resolve(-1);
             }
             else {
+              if(id > 0){
+                this.delete(id);
+              }
               let sql = `INSERT INTO vacina (nome, tipo, lote, data, data_proxima, observacoes) VALUES (?, ?, ?, ?, ?, ?)`;
               let data = [vacina.nome, vacina.tipo, vacina.lote, this.dbProvider.formatDate(vacina.data),
                 this.dbProvider.formatDate(vacina.data_proxima), vacina.observacoes];
@@ -162,11 +165,7 @@ export class VacinaProvider {
   }
 
   public save(v:Vacina, id:number){
-    return this.delete(id).then( () => {
-      return this.insert(v);
-    }).catch((e) => {
-      console.error(e);
-    })
+    return this.insert(v, id);
   }
 
   public search(query:string){

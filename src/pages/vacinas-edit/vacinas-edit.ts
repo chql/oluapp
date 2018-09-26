@@ -162,7 +162,7 @@ export class VacinasEditPage {
       });
     }
     else {
-      this.dbVacina.insert(novaVacina).then((result) => {
+      this.dbVacina.insert(novaVacina, -1).then((result) => {
         if(result > 0){
           this.pageResult.result = true;
           this.pageResult.message = 'Vacina adicionada com sucesso!';
