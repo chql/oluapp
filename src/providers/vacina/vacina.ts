@@ -46,33 +46,34 @@ export class VacinaProvider {
   }
 
   public insert(vacina: Vacina) {
-    return this.dbProvider.getDB()
-      .then((db: SQLiteObject) => {
-        db.executeSql('SELECT * FROM vacina WHERE nome = ? AND data = ?',
-          [vacina.nome, this.dbProvider.formatDate(vacina.data)]).then( (result : any) => {
-            alert(result.rows.length);
-            alert(result.rows.length > 0);
-          if(result.rows.length > 0) {
-            return -1;
-          }
-          else {
-            let sql = `INSERT INTO vacina (nome, tipo, lote, data, data_proxima, observacoes) VALUES (?, ?, ?, ?, ?, ?)`;
-            let data = [vacina.nome, vacina.tipo, vacina.lote, this.dbProvider.formatDate(vacina.data),
-              this.dbProvider.formatDate(vacina.data_proxima), vacina.observacoes];
-            db.executeSql(sql, data)
-              .then((data: any) => {
-                for (let i = 0; i < vacina.anexos.length; i++) {
-                  let a = vacina.anexos[i];
-                  if (a['nome'] !== undefined && a['caminho'] !== undefined) {
-                    this.insertAnexo(data.insertId, a.caminho, a.nome);
+    return new Promise<number> ( (resolve) => {
+      this.dbProvider.getDB()
+        .then((db: SQLiteObject) => {
+          db.executeSql('SELECT * FROM vacina WHERE nome = ? AND data = ?',
+            [vacina.nome, this.dbProvider.formatDate(vacina.data)]).then( (result : any) => {
+            if(result.rows.length > 0) {
+              resolve(-1);
+            }
+            else {
+              let sql = `INSERT INTO vacina (nome, tipo, lote, data, data_proxima, observacoes) VALUES (?, ?, ?, ?, ?, ?)`;
+              let data = [vacina.nome, vacina.tipo, vacina.lote, this.dbProvider.formatDate(vacina.data),
+                this.dbProvider.formatDate(vacina.data_proxima), vacina.observacoes];
+              db.executeSql(sql, data)
+                .then((data: any) => {
+                  for (let i = 0; i < vacina.anexos.length; i++) {
+                    let a = vacina.anexos[i];
+                    if (a['nome'] !== undefined && a['caminho'] !== undefined) {
+                      this.insertAnexo(data.insertId, a.caminho, a.nome);
+                    }
                   }
-                }
-              })
-              .catch((e) => console.error(e));
-          }
-        }).catch((e) => console.log(e));
-      })
-      .catch((e) => console.error(e));
+                  resolve(1);
+                })
+                .catch((e) => console.error(e));
+            }
+          }).catch((e) => console.log(e));
+        })
+        .catch((e) => console.error(e));
+    });
   }
 
   public get(id: number) {

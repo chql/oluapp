@@ -111,10 +111,10 @@ export class VacinasEditPage {
     let hasError : boolean = false;
     let message  : string = '';
 
-    if(this.vacinaTipo.length < 1) {
+    /* if(this.vacinaTipo.length < 1) {
       hasError = true;
       message = 'Preencha o tipo da vacina';
-    }
+    }*/
 
     if(this.vacinaNome.length < 1) {
       hasError = true;
@@ -150,18 +150,29 @@ export class VacinasEditPage {
     novaVacina.anexos      = this.vacinaAnexos;
 
     if(this.vacinaId) {
-      this.dbVacina.save(novaVacina, this.vacinaId).then(() => {
-        this.pageResult.result = true;
-        this.pageResult.message = 'Vacina alterada com sucesso!';
-        this.navCtrl.pop();
+      this.dbVacina.save(novaVacina, this.vacinaId).then((result) => {
+        if(result > 0){
+          this.pageResult.result = true;
+          this.pageResult.message = 'Vacina alterada com sucesso!';
+          this.navCtrl.pop();
+        }
+        else {
+          alert("Já existe vacina com este nome nesta data.");
+        }
       });
     }
     else {
-      this.dbVacina.insert(novaVacina).then(() => {
+      this.dbVacina.insert(novaVacina).then((result) => {
+        if(result > 0){
           this.pageResult.result = true;
           this.pageResult.message = 'Vacina adicionada com sucesso!';
           this.navCtrl.pop();
-        });
+        }
+        else {
+          alert("Já existe vacina com este nome nesta data.");
+
+        }
+      });
     }
   }
 
