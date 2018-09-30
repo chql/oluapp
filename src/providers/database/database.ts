@@ -51,7 +51,22 @@ export class DatabaseProvider {
         categoria_id INTEGER NOT NULL,
         registro_id INTEGER NOT NULL,
         _data_criacao DATETIME DEFAULT current_timestamp NOT NULL
-       );`]
+       );`],
+      [`CREATE TABLE IF NOT EXISTS medicamento (
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        nome VARCHAR(64) NOT NULL,
+        data_vencimento DATE NOT NULL,
+        tipo VARCHAR(64) NOT NULL,
+        alergico BOOLEAN NOT NULL,
+        periodo_inicio DATE NOT NULL,
+        periodo_fim DATE NOT NULL,
+        dosagem VARCHAR(64),
+        causa VARCHAR(64),
+        tarja VARCHAR(64),
+        horario TIME NOT NULL,
+        observacoes TEXT NOT NULL,
+        _data_criacao DATETIME DEFAULT current_timestamp NOT NULL
+      );`]
     ])
       .then(() => console.log('Tabelas criadas'))
       .catch(e => console.error('Erro ao criar as tabelas', e));

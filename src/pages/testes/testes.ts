@@ -1,9 +1,14 @@
-import { Component } from '@angular/core';
-import { IonicPage, MenuController, NavController, Platform } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {IonicPage, MenuController, NavController, Platform} from 'ionic-angular';
 
-import { TranslateService } from '@ngx-translate/core';
-import {Vacina, VacinaProvider} from "../../providers/vacina/vacina";
+import {TranslateService} from '@ngx-translate/core';
 import {DatabaseProvider} from "../../providers/database/database";
+import {
+  Medicamento,
+  MedicamentoProvider,
+  tarjaMedicamento,
+  tipoMedicamento
+} from "../../providers/medicamento/medicamento";
 
 export interface Slide {
   title: string;
@@ -28,10 +33,21 @@ export class TestPage {
   }
 
   save () {
-    let v = new VacinaProvider(this.db);
-    v.search(this.vacina['nome']).then((d) => {
-      console.log(d);
-    });
+    let m = new MedicamentoProvider(this.db);
+    let med = new Medicamento();
+    med.nome = "nome";
+    med.alergico = false;
+    med.causa = "causa";
+    med.data_vencimento = new Date();
+    med.horario = new Date();
+    med.periodo_inicio = new Date();
+    med.periodo_fim = new Date();
+    med.dosagem = "hiperdosagem";
+    med.observacoes = "minhas obs";
+    med.tarja = tarjaMedicamento.Vermelha;
+    med.tipo = tipoMedicamento.manipulado;
+    med.anexos = [];
+    console.log(m.search('XXX'));
   }
   /*
     onSlideChangeStart(slider) {

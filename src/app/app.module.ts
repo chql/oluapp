@@ -20,6 +20,8 @@ import { VacinaProvider } from '../providers/vacina/vacina';
 
 import { VacinasPage } from '../pages/vacinas/vacinas';
 import { VacinasEditPage } from '../pages/vacinas-edit/vacinas-edit';
+import { MedicamentoProvider } from '../providers/medicamento/medicamento';
+import { AnexoProvider } from '../providers/anexo/anexo';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -80,7 +82,9 @@ export function provideSettings(storage: Storage) {
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     SQLite,
     DatabaseProvider,
-    VacinaProvider
+    VacinaProvider,
+    MedicamentoProvider,
+    AnexoProvider
   ]
 })
 export class AppModule { }

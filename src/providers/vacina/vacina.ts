@@ -2,47 +2,16 @@ import { Injectable } from '@angular/core';
 import { SQLiteObject } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../database/database';
 import { DateTime } from "ionic-angular";
+import {AnexoProvider} from "../anexo/anexo";
 
 const CATEGORIA = 1;
 
 @Injectable()
 export class VacinaProvider {
+  anexos: AnexoProvider;
 
-  constructor(private dbProvider: DatabaseProvider) { }
-
-  private insertAnexo(registro_id: Number, caminho: string, nome: string){
-    return this.dbProvider.getDB()
-      .then((db: SQLiteObject) => {
-        let sql = `INSERT INTO anexo (nome, caminho, categoria_id, registro_id) VALUES (?, ?, ?, ?)`;
-        let data = [nome, caminho, CATEGORIA, registro_id];
-
-        return db.executeSql(sql, data)
-          .catch((e) => console.error(e));
-      })
-      .catch((e) => console.error(e));
-  }
-
-  private getAnexo(registro_id: Number, cb : any){
-    return this.dbProvider.getDB()
-      .then((db: SQLiteObject) => {
-        let sql = 'SELECT * FROM anexo WHERE categoria_id = ? AND registro_id = ?';
-        let data = [CATEGORIA, registro_id];
-
-        return db.executeSql(sql, data)
-          .then((data: any) => {
-            if (data.rows.length > 0) {
-              let anexos: any[] = [];
-              for (let i = 0; i < data.rows.length; i++) {
-                anexos.push(data.rows.item(i));
-              }
-              cb(anexos);
-            } else {
-              cb([]);
-            }
-          })
-          .catch((e) => console.error(e));
-      })
-      .catch((e) => console.error(e));
+  constructor(private dbProvider: DatabaseProvider) {
+    this.anexos = new AnexoProvider(dbProvider);
   }
 
   public insert(vacina: Vacina, id: number) {
@@ -51,7 +20,7 @@ export class VacinaProvider {
         .then((db: SQLiteObject) => {
           db.executeSql('SELECT * FROM vacina WHERE nome = ? AND data = ?',
             [vacina.nome, this.dbProvider.formatDate(vacina.data)]).then( (result : any) => {
-            if(result.rows.length > 0) {
+            if(result.rows.length > 0 && result.rows.item(0)['id'] != id) {
               resolve(-1);
             }
             else {
@@ -66,7 +35,7 @@ export class VacinaProvider {
                   for (let i = 0; i < vacina.anexos.length; i++) {
                     let a = vacina.anexos[i];
                     if (a['nome'] !== undefined && a['caminho'] !== undefined) {
-                      this.insertAnexo(data.insertId, a.caminho, a.nome);
+                      this.anexos.insertAttachment(data.insertId, CATEGORIA, a.caminho, a.nome);
                     }
                   }
                   resolve(1);
@@ -97,7 +66,7 @@ export class VacinaProvider {
                 vacina.tipo = item.tipo;
                 vacina.observacoes = item.observacoes;
                 vacina._data_criacao = item._data_criacao;
-                this.getAnexo(vacina.id, (anexos) => {
+                this.anexos.getAttachment(vacina.id, CATEGORIA, (anexos) => {
                   vacina.anexos = anexos;
                   resolve(vacina);
                 });
@@ -128,7 +97,7 @@ export class VacinaProvider {
                 v.nome = t['nome'];
                 v.data = t['data'];
                 v.observacoes = t['observacoes'];
-                this.getAnexo(v.id, (anexos) => {
+                this.anexos.getAttachment(v.id, CATEGORIA, (anexos) => {
                     v.anexos = anexos;
                 });
                 v.data_proxima = t['data_proxima'];
@@ -188,7 +157,7 @@ export class VacinaProvider {
                 v.nome = t['nome'];
                 v.data = t['data'];
                 v.observacoes = t['observacoes'];
-                this.getAnexo(v.id, (anexos) => {
+                this.anexos.getAttachment(v.id, CATEGORIA, (anexos) => {
                   v.anexos = anexos;
                 });
                 v.data_proxima = t['data_proxima'];
