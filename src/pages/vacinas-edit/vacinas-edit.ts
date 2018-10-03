@@ -170,7 +170,6 @@ export class VacinasEditPage {
         }
         else {
           alert("Já existe vacina com este nome nesta data.");
-
         }
       });
     }

@@ -1,0 +1,102 @@
+<ion-header>
+
+  <ion-navbar color="background" hideBackButton="true">
+    <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Medicamentos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+    <ion-list no-lines>
+        <ion-item><h1 ion-text text-center>Inserir Medicamento</h1></ion-item>
+        <ion-item>
+            <ion-label floating>Nome do medicamento *</ion-label>
+            <ion-input [(ngModel)]="medicamentoNome"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Tipo do medicamento</ion-label>
+            <ion-select [(ngModel)]="medicamentoTipo">
+                  <ion-option value="fitoterapico" selected="true">Fitoterápico</ion-option>
+                  <ion-option value="alopatico">Alopático</ion-option>
+                  <ion-option value="homeopatico">Homeopático</ion-option>
+                  <ion-option value="similar">Similar</ion-option>
+                  <ion-option value="manipulado">Manipulado</ion-option>
+                  <ion-option value="generico">Genérico</ion-option>
+                  <ion-option value="referencia">Referência</ion-option>
+                  <ion-option value="outro">Outro</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Tarja do medicamento</ion-label>
+            <ion-select [(ngModel)]="medicamentoTarja">
+                  <ion-option value="vermelha">Vermelha</ion-option>
+                  <ion-option value="amarela" selected="true">Amarela</ion-option>
+                  <ion-option value="preta">Preta</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Dosagem do medicamento*</ion-label>
+            <ion-input [(ngModel)]="medicamentoDosagem"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Causa</ion-label>
+          <ion-input [(ngModel)]="medicamentoCausa"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Observações</ion-label>
+            <ion-textarea [(ngModel)]="medicamentoObservacao"></ion-textarea>
+        </ion-item>
+        <ion-item>
+            <ion-grid>
+                <ion-row *ngFor="let anexo of medicamentoAnexos">
+                    <ion-col>
+                        <ion-badge color="light" text-center>
+                            <ion-icon name="attach"></ion-icon>
+                            {{ anexo.nome }}
+                            <button ion-button color="danger" (click)="removeAttachment(anexo)">
+                                <ion-icon name="trash"></ion-icon>
+                            </button>
+                        </ion-badge>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <button ion-button icon-only color="primary" (click)="addAttachment()">
+                        <ion-icon name="attach"></ion-icon>
+                        <ion-icon name="add"></ion-icon>
+                    </button>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+        <ion-item>
+          <ion-label>Medicamento alérgico</ion-label>
+          <ion-checkbox [(ngModel)]="medicamentoAlergico"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Vencimento</ion-label>
+            <ion-datetime [(ngModel)]="medicamentoVencimento"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <h3 ion-text>Período</h3>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Inicio*</ion-label>
+          <ion-datetime [(ngModel)]="medicamentoInicio"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Final*</ion-label>
+          <ion-datetime [(ngModel)]="medicamentoFinal"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-grid>
+                <ion-row>
+                    <ion-col><button ion-button full color="secondary" (click)="submitSave()">Salvar</button></ion-col>
+                    <ion-col><button ion-button full color="danger" (click)="cancelEditing()">Cancelar</button></ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-list>
+
+</ion-content>

@@ -3,6 +3,7 @@ import { IonicPage, MenuController, NavController, Platform } from 'ionic-angula
 
 import { TranslateService } from '@ngx-translate/core';
 import { VacinasPage } from '../vacinas/vacinas';
+import { MedicamentosPage } from '../medicamentos/medicamentos';
 
 @IonicPage()
 @Component({
@@ -13,6 +14,10 @@ export class WelcomePage {
 
   constructor(public navCtrl: NavController, public menu: MenuController, translate: TranslateService, public platform: Platform) {
     
+  }
+
+  openMedicamentos() {
+      this.navCtrl.push(MedicamentosPage);
   }
 
   openVacinas() {

@@ -17,11 +17,14 @@ import { MyApp } from './app.component';
 import { SQLite } from "@ionic-native/sqlite";
 import { DatabaseProvider } from '../providers/database/database';
 import { VacinaProvider } from '../providers/vacina/vacina';
+import { MedicamentoProvider } from '../providers/medicamento/medicamento';
+import { AnexoProvider } from '../providers/anexo/anexo';
 
 import { VacinasPage } from '../pages/vacinas/vacinas';
 import { VacinasEditPage } from '../pages/vacinas-edit/vacinas-edit';
-import { MedicamentoProvider } from '../providers/medicamento/medicamento';
-import { AnexoProvider } from '../providers/anexo/anexo';
+import { MedicamentosPage } from '../pages/medicamentos/medicamentos';
+import { MedicamentosEditPage } from '../pages/medicamentos-edit/medicamentos-edit';
+
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -48,7 +51,9 @@ export function provideSettings(storage: Storage) {
   declarations: [
     MyApp,
     VacinasPage,
-    VacinasEditPage
+    VacinasEditPage,
+    MedicamentosPage,
+    MedicamentosEditPage
   ],
   imports: [
     BrowserModule,
@@ -67,7 +72,9 @@ export function provideSettings(storage: Storage) {
   entryComponents: [
     MyApp,
     VacinasPage,
-    VacinasEditPage
+    VacinasEditPage,
+    MedicamentosPage,
+    MedicamentosEditPage
   ],
   providers: [
     Camera,

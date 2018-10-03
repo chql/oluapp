@@ -39,12 +39,12 @@ export class TestPage {
     med.alergico = false;
     med.causa = "causa";
     med.data_vencimento = new Date();
-    med.horario = new Date();
+    //med.horario = new Date();
     med.periodo_inicio = new Date();
     med.periodo_fim = new Date();
     med.dosagem = "hiperdosagem";
     med.observacoes = "minhas obs";
-    med.tarja = tarjaMedicamento.Vermelha;
+    med.tarja = tarjaMedicamento.vermelha;
     med.tipo = tipoMedicamento.manipulado;
     med.anexos = [];
     console.log(m.search('XXX'));

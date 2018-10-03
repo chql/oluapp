@@ -26,7 +26,7 @@ export class MedicamentoProvider {
     m.dosagem = obj['dosagem'];
     m.causa = obj['causa'];
     m.tarja = obj['tarja'];
-    m.horario = obj['horario'];
+    //m.horario = obj['horario'];
     m.observacoes = obj['observacoes'];
     m._data_criacao = obj['_data_criacao'];
     return m;
@@ -38,7 +38,7 @@ export class MedicamentoProvider {
         .then((db: SQLiteObject) => {
           db.executeSql(`SELECT * FROM medicamento WHERE nome = ? AND dosagem = ? AND periodo_inicio = ? 
             AND periodo_fim = ? ;`,
-            [med.nome, med.dosagem, med.periodo_inicio, med.periodo_fim]).then( (result : any) => {
+            [med.nome, med.dosagem, this.dbProvider.formatDate(med.periodo_inicio), this.dbProvider.formatDate(med.periodo_fim)]).then( (result : any) => {
             if(result.rows.length > 0 && result.rows.item(0)['id'] != id) {
               resolve(-1);
             }
@@ -47,9 +47,9 @@ export class MedicamentoProvider {
                 this.delete(id);
               }
               let sql = `INSERT INTO medicamento (nome, tipo, data_vencimento, alergico, periodo_inicio, periodo_fim, 
-              dosagem, causa, tarja, horario, observacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-              let data = [med.nome, med.tipo, med.data_vencimento, med.alergico, med.periodo_inicio, med.periodo_fim,
-              med.dosagem, med.causa, med.tarja, med.horario, med.observacoes];
+              dosagem, causa, tarja, observacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+              let data = [med.nome, med.tipo, this.dbProvider.formatDate(med.data_vencimento), med.alergico, this.dbProvider.formatDate(med.periodo_inicio), this.dbProvider.formatDate(med.periodo_fim),
+              med.dosagem, med.causa, med.tarja, med.observacoes];
               db.executeSql(sql, data)
                 .then((data: any) => {
                   for (let i = 0; i < med.anexos.length; i++) {
@@ -154,20 +154,20 @@ export class MedicamentoProvider {
 }
 
 export enum tipoMedicamento {
-  fitoterapico = 'Fitoterápico',
-  alopatico = 'Alopático',
-  homeopatico = 'Homeopático',
-  similar = 'Similar',
-  manipulado = 'Manipulado',
-  generico = 'Genérico',
-  referencia = 'Referência',
-  outro = 'Outro'
+  fitoterapico = 'fitoterapico',
+  alopatico = 'alopatico',
+  homeopatico = 'homeopatico',
+  similar = 'similar',
+  manipulado = 'manipulado',
+  generico = 'generico',
+  referencia = 'referencia',
+  outro = 'outro'
 }
 
 export enum tarjaMedicamento {
-  Vermelha = '#ff0000',
-  Amarela = '#eedd00',
-  Preta = '#000000',
+  vermelha = 'vermelha',
+  amarela = 'amarela',
+  preta = 'preta',
 }
 
 export class Medicamento {
@@ -181,7 +181,7 @@ export class Medicamento {
   dosagem: string;
   causa: string;
   tarja: tarjaMedicamento;
-  horario: Date;
+  //horario: Date;
   observacoes: string;
   _data_criacao: DateTime;
   anexos: any;

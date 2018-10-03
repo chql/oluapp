@@ -63,7 +63,6 @@ export class DatabaseProvider {
         dosagem VARCHAR(64),
         causa VARCHAR(64),
         tarja VARCHAR(64),
-        horario TIME NOT NULL,
         observacoes TEXT NOT NULL,
         _data_criacao DATETIME DEFAULT current_timestamp NOT NULL
       );`]
