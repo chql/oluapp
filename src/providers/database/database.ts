@@ -59,11 +59,14 @@ export class DatabaseProvider {
         tipo VARCHAR(64) NOT NULL,
         alergico BOOLEAN NOT NULL,
         periodo_inicio DATE NOT NULL,
-        periodo_fim DATE NOT NULL,
+        periodo_fim DATE,
         dosagem VARCHAR(64),
         causa VARCHAR(64),
         tarja VARCHAR(64),
         observacoes TEXT NOT NULL,
+        quantidade INTEGER,
+        recorrencia VARCHAR(64),
+        turno INTEGER,
         _data_criacao DATETIME DEFAULT current_timestamp NOT NULL
       );`]
     ])

@@ -27,6 +27,9 @@ export class MedicamentoProvider {
     m.causa = obj['causa'];
     m.tarja = obj['tarja'];
     //m.horario = obj['horario'];
+    m.quantidade = obj['quantidade'];
+    m.recorrencia = obj['recorrencia'];
+    m.turno = obj['turno'];
     m.observacoes = obj['observacoes'];
     m._data_criacao = obj['_data_criacao'];
     return m;
@@ -36,8 +39,7 @@ export class MedicamentoProvider {
     return new Promise<number> ( (resolve) => {
       this.dbProvider.getDB()
         .then((db: SQLiteObject) => {
-          db.executeSql(`SELECT * FROM medicamento WHERE nome = ? AND dosagem = ? AND periodo_inicio = ? 
-            AND periodo_fim = ? ;`,
+          db.executeSql(`SELECT * FROM medicamento WHERE nome = ? AND dosagem = ? AND periodo_inicio = ? ;`,
             [med.nome, med.dosagem, this.dbProvider.formatDate(med.periodo_inicio), this.dbProvider.formatDate(med.periodo_fim)]).then( (result : any) => {
             if(result.rows.length > 0 && result.rows.item(0)['id'] != id) {
               resolve(-1);
@@ -47,9 +49,9 @@ export class MedicamentoProvider {
                 this.delete(id);
               }
               let sql = `INSERT INTO medicamento (nome, tipo, data_vencimento, alergico, periodo_inicio, periodo_fim, 
-              dosagem, causa, tarja, observacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+              dosagem, causa, tarja, observacoes, quantidade, recorrencia, turno) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
               let data = [med.nome, med.tipo, this.dbProvider.formatDate(med.data_vencimento), med.alergico, this.dbProvider.formatDate(med.periodo_inicio), this.dbProvider.formatDate(med.periodo_fim),
-              med.dosagem, med.causa, med.tarja, med.observacoes];
+              med.dosagem, med.causa, med.tarja, med.observacoes, med.quantidade, med.recorrencia, med.turno];
               db.executeSql(sql, data)
                 .then((data: any) => {
                   for (let i = 0; i < med.anexos.length; i++) {
@@ -170,6 +172,20 @@ export enum tarjaMedicamento {
   preta = 'preta',
 }
 
+export enum turnoMedicamento {
+  manha = 1,
+  tarde = 2,
+  noite = 4
+}
+
+export enum recorrenciaMedicamento {
+  diariamente = 'dia',
+  semanalmente = 'semana',
+  quinzenalmente = 'quinzena',
+  mensalmente = 'mes',
+  anualmente = 'ano'
+}
+
 export class Medicamento {
   id: number;
   nome: string;
@@ -182,6 +198,9 @@ export class Medicamento {
   causa: string;
   tarja: tarjaMedicamento;
   //horario: Date;
+  quantidade: number;
+  recorrencia: recorrenciaMedicamento;
+  turno: number;
   observacoes: string;
   _data_criacao: DateTime;
   anexos: any;
