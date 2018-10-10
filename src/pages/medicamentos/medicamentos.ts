@@ -119,7 +119,9 @@ export class MedicamentosPage {
    * @param str
    */
   getDate(str: string) {
-    return new Date(str);
+    let d = new Date(str);
+    d.setDate(d.getDate()+1);
+    return d;
   }
 
   /**
