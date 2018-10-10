@@ -38,8 +38,30 @@
             </ion-select>
         </ion-item>
         <ion-item>
-            <ion-label floating>Dosagem do medicamento*</ion-label>
+            <ion-label floating>Dosagem do medicamento *</ion-label>
             <ion-input [(ngModel)]="medicamentoDosagem"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Quantidade</ion-label>
+            <ion-input [(ngModel)]="medicamentoQuantidade" type="number"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Recorrência *</ion-label>
+            <ion-select [(ngModel)]="medicamentoRecorrencia">
+                <ion-option value="dia">Diariamente</ion-option>
+                <ion-option value="semana">Semanalmente</ion-option>
+                <ion-option value="quinzena">Quinzenalmente</ion-option>
+                <ion-option value="mes">Mensalmente</ion-option>
+                <ion-option value="ano">Anualmente</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Horários *</ion-label>
+            <ion-select [(ngModel)]="medicamentoTurnos" multiple="true">
+                <ion-option value="1">Manhã</ion-option>
+                <ion-option value="2">Tarde</ion-option>
+                <ion-option value="4">Noite</ion-option>
+            </ion-select>
         </ion-item>
         <ion-item>
           <ion-label floating>Causa</ion-label>
@@ -82,11 +104,11 @@
           <h3 ion-text>Período</h3>
         </ion-item>
         <ion-item>
-          <ion-label stacked>Inicio*</ion-label>
+          <ion-label stacked>Inicio *</ion-label>
           <ion-datetime [(ngModel)]="medicamentoInicio"></ion-datetime>
         </ion-item>
         <ion-item>
-          <ion-label stacked>Final*</ion-label>
+          <ion-label stacked>Final</ion-label>
           <ion-datetime [(ngModel)]="medicamentoFinal"></ion-datetime>
         </ion-item>
         <ion-item>

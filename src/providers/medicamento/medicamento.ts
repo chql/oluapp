@@ -18,11 +18,11 @@ export class MedicamentoProvider {
     let m = new Medicamento();
     m.id = obj['id'];
     m.nome = obj['nome'];
-    m.data_vencimento = obj['data_vencimento'];
+    m.data_vencimento = new Date(obj['data_vencimento']);
     m.tipo = obj['tipo'];
     m.alergico = obj['alergico'];
-    m.periodo_inicio = obj['periodo_inicio'];
-    m.periodo_fim = obj['periodo_fim'];
+    m.periodo_inicio = new Date(obj['periodo_inicio']);
+    m.periodo_fim = new Date(obj['periodo_fim']);
     m.dosagem = obj['dosagem'];
     m.causa = obj['causa'];
     m.tarja = obj['tarja'];
@@ -40,7 +40,7 @@ export class MedicamentoProvider {
       this.dbProvider.getDB()
         .then((db: SQLiteObject) => {
           db.executeSql(`SELECT * FROM medicamento WHERE nome = ? AND dosagem = ? AND periodo_inicio = ? ;`,
-            [med.nome, med.dosagem, this.dbProvider.formatDate(med.periodo_inicio), this.dbProvider.formatDate(med.periodo_fim)]).then( (result : any) => {
+            [med.nome, med.dosagem, this.dbProvider.formatDate(med.periodo_inicio)]).then( (result : any) => {
             if(result.rows.length > 0 && result.rows.item(0)['id'] != id) {
               resolve(-1);
             }
