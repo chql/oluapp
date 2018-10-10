@@ -38,7 +38,7 @@
             </ion-select>
         </ion-item>
         <ion-item>
-            <ion-label floating>Dosagem do medicamento *</ion-label>
+            <ion-label floating>Dosagem *</ion-label>
             <ion-input [(ngModel)]="medicamentoDosagem"></ion-input>
         </ion-item>
         <ion-item>
@@ -46,7 +46,7 @@
             <ion-input [(ngModel)]="medicamentoQuantidade" type="number"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>Recorrência *</ion-label>
+            <ion-label floating>Recorrência</ion-label>
             <ion-select [(ngModel)]="medicamentoRecorrencia">
                 <ion-option value="dia">Diariamente</ion-option>
                 <ion-option value="semana">Semanalmente</ion-option>
@@ -56,7 +56,7 @@
             </ion-select>
         </ion-item>
         <ion-item>
-            <ion-label floating>Horários *</ion-label>
+            <ion-label floating>Horários</ion-label>
             <ion-select [(ngModel)]="medicamentoTurnos" multiple="true">
                 <ion-option value="1">Manhã</ion-option>
                 <ion-option value="2">Tarde</ion-option>
@@ -93,12 +93,15 @@
             </ion-grid>
         </ion-item>
         <ion-item>
-          <ion-label>Medicamento alérgico</ion-label>
-          <ion-checkbox [(ngModel)]="medicamentoAlergico"></ion-checkbox>
+            <ion-label stacked>Alérgico</ion-label>
+            <ion-select [(ngModel)]="medicamentoAlergico">
+                <ion-option value="sim">Sim</ion-option>
+                <ion-option value="nao">Não</ion-option>
+            </ion-select>
         </ion-item>
         <ion-item>
             <ion-label stacked>Vencimento</ion-label>
-            <ion-datetime [(ngModel)]="medicamentoVencimento"></ion-datetime>
+            <ion-datetime [(ngModel)]="medicamentoVencimento" max="{{vencimentoMaxDate}}"></ion-datetime>
         </ion-item>
         <ion-item>
           <h3 ion-text>Período</h3>
@@ -109,7 +112,7 @@
         </ion-item>
         <ion-item>
           <ion-label stacked>Final</ion-label>
-          <ion-datetime [(ngModel)]="medicamentoFinal"></ion-datetime>
+          <ion-datetime [(ngModel)]="medicamentoFinal" max="{{periodoFinalMaxDate}}"></ion-datetime>
         </ion-item>
         <ion-item>
             <ion-grid>

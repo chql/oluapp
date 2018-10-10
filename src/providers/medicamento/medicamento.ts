@@ -20,7 +20,7 @@ export class MedicamentoProvider {
     m.nome = obj['nome'];
     m.data_vencimento = new Date(obj['data_vencimento']);
     m.tipo = obj['tipo'];
-    m.alergico = obj['alergico'];
+    m.alergico = obj['alergico'] == 'true';
     m.periodo_inicio = new Date(obj['periodo_inicio']);
     m.periodo_fim = new Date(obj['periodo_fim']);
     m.dosagem = obj['dosagem'];

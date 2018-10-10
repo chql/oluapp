@@ -60,7 +60,7 @@ export class MedicamentosEditPage {
   /**
    * Horários para consumo do medicamento.
    */
-  medicamentoTurnos : Array<number> = [];
+  medicamentoTurnos : Array<string> = [];
 
   /**
    * Causa para uso do medicamento.
@@ -80,12 +80,17 @@ export class MedicamentosEditPage {
   /**
    * Medicamento para tratamento de alergias.
    */
-  medicamentoAlergico : boolean = false;
+  medicamentoAlergico : string = 'nao';
 
   /**
    * Data de vencimento do medicamento.
    */
   medicamentoVencimento : string = (new Date()).toISOString();
+
+  /**
+   * Ano maximo para vencimento de medicamento.
+   */
+  vencimentoMaxDate : string = ((new Date()).getFullYear()+10).toString();
 
   /**
    * Inicio do tratamento do medicamento.
@@ -96,6 +101,11 @@ export class MedicamentosEditPage {
    * Fim do tratamento do medicamento.
    */
   medicamentoFinal : string = (new Date()).toISOString();
+
+  /**
+   * Data maxima para fim do tratamento.
+   */
+  periodoFinalMaxDate : string = ((new Date()).getFullYear()+10).toString();
 
   /**
    * Resultado retornado para tela de listagem.
@@ -121,7 +131,7 @@ export class MedicamentosEditPage {
 
     // recupera os parametros de navegacao
     this.medicamentoId = this.navParams.get('medicamentoId');
-    this.pageResult = this.navParams.get('result');
+    this.pageResult    = this.navParams.get('result');
 
     if(this.medicamentoId) {
       this.dbMedicamento.get(this.medicamentoId).then((medicamento) => {
@@ -134,19 +144,18 @@ export class MedicamentosEditPage {
         this.medicamentoCausa       = medicamento.causa;
         this.medicamentoObservacao  = medicamento.observacoes;
         this.medicamentoAnexos      = medicamento.anexos;
-        this.medicamentoAlergico    = medicamento.alergico;
-        console.log('Vencimento ' + (typeof medicamento.data_vencimento));
+        this.medicamentoAlergico    = medicamento.alergico ? 'sim' : 'nao';
         this.medicamentoVencimento  = medicamento.data_vencimento.toISOString();
         this.medicamentoInicio      = medicamento.periodo_inicio.toISOString();
         this.medicamentoFinal       = medicamento.periodo_fim.toISOString();
 
-        if(medicamento.turno & turnoMedicamento.manha) this.medicamentoTurnos.push(turnoMedicamento.manha);
-        if(medicamento.turno & turnoMedicamento.tarde) this.medicamentoTurnos.push(turnoMedicamento.tarde);
-        if(medicamento.turno & turnoMedicamento.noite) this.medicamentoTurnos.push(turnoMedicamento.noite);
+        let turnos = [];
 
-        console.log('asdUQWFUQUWHFHQWHUFQHWFH');
+        if(medicamento.turno & turnoMedicamento.manha) turnos.push(turnoMedicamento.manha.toString());
+        if(medicamento.turno & turnoMedicamento.tarde) turnos.push(turnoMedicamento.tarde.toString());
+        if(medicamento.turno & turnoMedicamento.noite) turnos.push(turnoMedicamento.noite.toString());
 
-        console.log('Parsed turnos' + this.medicamentoTurnos);
+        this.medicamentoTurnos = turnos;
       });
     }
   }
@@ -223,10 +232,11 @@ export class MedicamentosEditPage {
    * Codifica o campo de turnos disponiveis para armazenamento.
    * @param value 
    */
-  parseMedicamentoTurnos(value : Array<number>) {
+  parseMedicamentoTurnos(value : Array<string>) {
+    console.log(value);
     let val = 0;
     for(let i = 0; i < value.length; i++) {
-      val |= value[i]
+      val |= parseInt(value[i]);
     }
     return val;
   }
@@ -265,7 +275,7 @@ export class MedicamentosEditPage {
     novoMedicamento.causa = this.medicamentoCausa;
     novoMedicamento.observacoes = this.medicamentoObservacao;
     novoMedicamento.anexos = this.medicamentoAnexos;
-    novoMedicamento.alergico = this.medicamentoAlergico;
+    novoMedicamento.alergico = (this.medicamentoAlergico == 'sim') ? true : false;
     novoMedicamento.data_vencimento = new Date(this.medicamentoVencimento);
     novoMedicamento.periodo_inicio = new Date(this.medicamentoInicio);
     novoMedicamento.periodo_fim = new Date(this.medicamentoFinal);
