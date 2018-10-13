@@ -68,6 +68,18 @@ export class DatabaseProvider {
         recorrencia VARCHAR(64),
         turno INTEGER,
         _data_criacao DATETIME DEFAULT current_timestamp NOT NULL
+      );`],
+      [`CREATE TABLE IF NOT EXISTS consulta (
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+        nome VARCHAR(64) NOT NULL,
+        especialidade VARCHAR(64) NOT NULL,
+        data DATE NOT NULL,
+        causa TEXT NOT NULL,
+        preco REAL NOT NULL,
+        exames TEXT NOT NULL,
+        retorno DATE NOT NULL,
+        observacoes TEXT,
+        _data_criacao DATETIME DEFAULT current_timestamp NOT NULL
       );`]
     ])
       .then(() => console.log('Tabelas criadas'))
