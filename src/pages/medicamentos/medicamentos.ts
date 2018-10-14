@@ -1,11 +1,117 @@
 import {Component, ViewChild} from '@angular/core';
-import {AlertController, IonicPage, NavController, Platform, Searchbar, ToastController} from 'ionic-angular';
+import {AlertController, IonicPage, NavController, Platform, Searchbar, ToastController, NavParams, ViewController, ModalController} from 'ionic-angular';
 import {TranslateService} from '@ngx-translate/core';
 import {FileOpener} from '@ionic-native/file-opener';
 import {File, FileEntry} from '@ionic-native/file';
-import {MedicamentoProvider, tarjaMedicamento, tipoMedicamento} from "../../providers/medicamento/medicamento";
+import {
+  MedicamentoProvider,
+  tarjaMedicamento,
+  tipoMedicamento,
+  Medicamento,
+  turnoMedicamento
+} from "../../providers/medicamento/medicamento";
 import {MedicamentosEditPage} from '../medicamentos-edit/medicamentos-edit';
 import {timer} from 'rxjs/observable/timer';
+
+@Component({
+  templateUrl: 'detalhe.html'
+})
+export class MedicamentoDetalhesModal
+{
+  medicamento : Medicamento = null;
+  constructor(public params : NavParams,
+              public viewCtrl : ViewController,
+              private fOpener: FileOpener,
+              private file : File,
+  ) {
+    this.medicamento = params.get('medicamento');
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss().then(() => {});
+  }
+
+  /**
+   * Formata a data de aplicacao da vacina para exibicao.
+   * @param rawDate
+   */
+  dateFormat(rawDate : string) {
+    let date = new Date(rawDate);
+    return date.getDate() + '/' + (date.getMonth()+1) + '/' + (date.getFullYear());
+  }
+
+  /**
+   * Retorna texto representando os turnos de uso de um medicamento.
+   * @param t
+   */
+  turnoFormat(t : number) {
+    let label = '';
+    if(t & turnoMedicamento.manha) {
+      label = label.concat('Manhã');
+    }
+    if(t & turnoMedicamento.tarde) {
+      if(label.length > 0) label = label.concat(', ');
+      label = label.concat('Tarde');
+    }
+    if(t & turnoMedicamento.noite) {
+      if(label.length > 0) label = label.concat(', ');
+      label = label.concat('Noite');
+    }
+    return label;
+  }
+
+  backToDelete() {
+    this.viewCtrl.dismiss({ toDelete: true });
+  }
+
+  backToEdit() {
+    this.viewCtrl.dismiss({ toEdit: true });
+  }
+
+  /**
+   * Exibe um anexo ao clicar nele nos detalhes de uma vacina.
+   * @param anexo
+   */
+  openAttachment(anexo: any) {
+    return this.file.resolveLocalFilesystemUrl(anexo.caminho)
+      .then((entry: FileEntry) => {
+        if (entry) {
+          entry.file(meta => {
+            this.fOpener.open(anexo.caminho, meta.type).then(() => console.log('Abriu'))
+          }, error => {
+            console.log(error);
+          })
+        }
+      });
+  }
+
+  /**
+   * Formata tarja do medicamento para exibicao.
+   * @param t
+   */
+  formatTarja(t: tarjaMedicamento) {
+    if (t == tarjaMedicamento.amarela) return 'Amarela';
+    if (t == tarjaMedicamento.preta) return 'Preta';
+    if (t == tarjaMedicamento.vermelha) return 'Vermelha';
+    return '(null)';
+  }
+
+  /**
+   * Formata tipo do medicamento para exibicao.
+   * @param t
+   */
+  formatTipo(t : tipoMedicamento) {
+    if(t == tipoMedicamento.fitoterapico) return 'Fitoterápico';
+    if(t == tipoMedicamento.alopatico) return 'Alopático';
+    if(t == tipoMedicamento.homeopatico) return 'Homeopático';
+    if(t == tipoMedicamento.similar) return 'Similar';
+    if(t == tipoMedicamento.manipulado) return 'Manipulado';
+    if(t == tipoMedicamento.generico) return 'Genérico';
+    if(t == tipoMedicamento.referencia) return 'Referência';
+    if(t == tipoMedicamento.outro) return 'Outro';
+    return '(null)';
+  }
+}
 
 @IonicPage()
 @Component({
@@ -70,7 +176,8 @@ export class MedicamentosPage {
               private toast: ToastController,
               private alert: AlertController,
               private fOpener: FileOpener,
-              private file: File) {
+              private file: File,
+              private modal : ModalController) {
     this.getMedicamentos();
   }
 
@@ -84,34 +191,24 @@ export class MedicamentosPage {
     });
   }
 
-  /**
-   * Exibe um anexo ao clicar nele nos detalhes de uma vacina.
-   * @param anexo
-   */
-  openAttachment(anexo: any) {
-    return this.file.resolveLocalFilesystemUrl(anexo.caminho)
-      .then((entry: FileEntry) => {
-        if (entry) {
-          entry.file(meta => {
-            this.fOpener.open(anexo.caminho, meta.type).then(() => console.log('Abriu'))
-          }, error => {
-            console.log(error);
-          })
-        }
-      });
-  }
 
   /**
    * Expande a visualizacao detalhada do medicamento.
-   * @param vacina
+   * @param medicamento
    */
-  expandView(medicamento) {
-    if (medicamento.detail === undefined) {
-      medicamento.detail = true;
-    }
-    else {
-      medicamento.detail = !medicamento.detail;
-    }
+  expandView(medicamento : Medicamento) {
+    let modal = this.modal.create(MedicamentoDetalhesModal, { medicamento : medicamento });
+    modal.onDidDismiss(data => {
+      if(data) {
+        if(data.toEdit === true) {
+          this.openEdit(medicamento.id);
+        }
+        else if(data.toDelete === true) {
+          this.openDelete(medicamento);
+        }
+      }
+    });
+    modal.present();
   }
 
   /**
@@ -144,29 +241,34 @@ export class MedicamentosPage {
 
   /**
    * Confirma um medicamento apos confirmacao do usuario.
-   * @param id
+   * @param medicamento
    */
-  openDelete(id : number) {
+  openDelete(medicamento : Medicamento) {
     this.alert.create({
       title: 'Confirmação',
       message: 'Tem certeza que deseja excluir o medicamento?',
       buttons: [
         {
           text: 'Cancelar',
+          handler: () => this.expandView(medicamento)
         },
         {
           text: 'Excluir',
           handler: () => {
-            this.dbMedicamento.delete(id).then(() => {
+            this.dbMedicamento.delete(medicamento.id).then(() => {
               let idx = -1;
               for(let i = 0; i < this.medicamentos.length; i++) {
-                if(this.medicamentos[i].id == id) {
+                if(this.medicamentos[i].id == medicamento.id) {
                   idx = i;
                   break;
                 }
               }
               if(idx != -1) {
                 this.medicamentos.splice(idx, 1);
+                this.toast.create({
+                  message: 'Medicamento excluído!',
+                  duration: 3000
+                }).present();
               }
             });
           }
@@ -249,26 +351,4 @@ export class MedicamentosPage {
     return date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
   }
 
-  /**
-   * Formata tarja do medicamento para exibicao.
-   * @param t
-   */
-  formatTarja(t: tarjaMedicamento) {
-    if (t == tarjaMedicamento.amarela) return 'Amarela';
-    if (t == tarjaMedicamento.preta) return 'Preta';
-    if (t == tarjaMedicamento.vermelha) return 'Vermelha';
-    return '(null)';
-  }
-
-  formatTipo(t : tipoMedicamento) {
-    if(t == tipoMedicamento.fitoterapico) return 'Fitoterápico';
-    if(t == tipoMedicamento.alopatico) return 'Alopático';
-    if(t == tipoMedicamento.homeopatico) return 'Homeopático';
-    if(t == tipoMedicamento.similar) return 'Similar';
-    if(t == tipoMedicamento.manipulado) return 'Manipulado';
-    if(t == tipoMedicamento.generico) return 'Genérico';
-    if(t == tipoMedicamento.referencia) return 'Referência';
-    if(t == tipoMedicamento.outro) return 'Outro';
-    return '(null)';
-  }
 }

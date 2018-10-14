@@ -22,74 +22,14 @@
 <ion-content>
   <ion-list no-lines>
     <ion-item *ngFor="let m of medicamentos">
-      <ion-item-sliding>
         <ion-item (click)="expandView(m)">
           <ion-avatar item-start text-center class="custom-item-avatar">
             <h6 ion-text>{{ getDate(m.periodo_inicio).getDate() }}</h6>
             <small ion-text>{{ monthsName[getDate(m.periodo_inicio).getMonth()] }}</small>
           </ion-avatar>
           <h1 ion-text>{{ m.nome }}</h1>
-          <small ion-text color="light" *ngIf="!(m.detail === true)">Toque para mais informações. Deslize para esquerda para modificar.</small>
-          <small ion-text color="light" *ngIf="m.detail === true">Toque para esconder detalhes.</small>
+          <small ion-text color="light">Toque para mais informações.</small>
         </ion-item>
-        <ion-item-options side="right">
-          <button ion-button color="primary" (click)="openEdit(m.id)">
-            <ion-icon name="create"></ion-icon>
-            Editar
-          </button>
-          <button ion-button color="danger" (click)="openDelete(m.id)">
-            <ion-icon name="trash"></ion-icon>
-            Excluir
-          </button>
-        </ion-item-options>
-      </ion-item-sliding>
-      <ion-item *ngIf="m.detail === true">
-        <ion-grid>
-          <ion-row><h6 ion-text>Detalhes</h6></ion-row>
-          <ion-row>
-            <ion-col>Tarja:</ion-col>
-            <ion-col>{{ formatTarja(m.tarja) }}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>Tipo:</ion-col>
-            <ion-col>{{ formatTipo(m.tipo) }}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>Período:</ion-col>
-            <ion-col>{{ dateFormat(m.periodo_inicio) }} a {{ dateFormat(m.periodo_fim) }}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>Causa:</ion-col>
-            <ion-col>{{ m.causa }}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>Dosagem:</ion-col>
-            <ion-col>{{ m.dosagem }}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>Vencimento:</ion-col>
-            <ion-col>{{ dateFormat(m.data_vencimento )}}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>Alérgico:</ion-col>
-            <ion-col>{{ m.alergico ? 'Sim' : 'Não' }}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>Observacões:</ion-col>
-            <ion-col>
-              <ion-item>{{ m.observacoes }}</ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col *ngFor="let anexo of m.anexos">
-              <ion-badge color="light" text-center (click)="openAttachment(anexo)">
-                <ion-icon name="attach"></ion-icon>
-                {{ anexo.nome }}
-              </ion-badge>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
     </ion-item>
   </ion-list>
     <ion-fab right bottom>

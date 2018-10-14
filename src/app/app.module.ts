@@ -20,9 +20,9 @@ import { VacinaProvider } from '../providers/vacina/vacina';
 import { MedicamentoProvider } from '../providers/medicamento/medicamento';
 import { AnexoProvider } from '../providers/anexo/anexo';
 
-import { VacinasPage } from '../pages/vacinas/vacinas';
+import { VacinasPage, VacinaDetalhesModal } from '../pages/vacinas/vacinas';
 import { VacinasEditPage } from '../pages/vacinas-edit/vacinas-edit';
-import { MedicamentosPage } from '../pages/medicamentos/medicamentos';
+import { MedicamentosPage, MedicamentoDetalhesModal } from '../pages/medicamentos/medicamentos';
 import { MedicamentosEditPage } from '../pages/medicamentos-edit/medicamentos-edit';
 
 
@@ -53,7 +53,9 @@ export function provideSettings(storage: Storage) {
     VacinasPage,
     VacinasEditPage,
     MedicamentosPage,
-    MedicamentosEditPage
+    MedicamentosEditPage,
+	  VacinaDetalhesModal,
+    MedicamentoDetalhesModal
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,9 @@ export function provideSettings(storage: Storage) {
     VacinasPage,
     VacinasEditPage,
     MedicamentosPage,
-    MedicamentosEditPage
+    MedicamentosEditPage,
+	  VacinaDetalhesModal,
+    MedicamentoDetalhesModal
   ],
   providers: [
     Camera,

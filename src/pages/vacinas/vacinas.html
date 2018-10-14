@@ -21,53 +21,13 @@
 <ion-content>
     <ion-list no-lines>
         <ion-item *ngFor="let vacina of vacinas">
-            <ion-item-sliding>
-                <ion-item (click)="expandView(vacina)">
-                    <ion-avatar item-start text-center class="vacina-item-avatar">
-                        <h6 ion-text>{{ getDate(vacina.data).getDate() }}</h6>
-                        <small ion-text>{{ monthsName[getDate(vacina.data).getMonth()] }}</small>
-                    </ion-avatar>
-                    <h1 ion-text>{{ vacina.nome }}</h1>
-                    <small ion-text color="light" *ngIf="!(vacina.detail === true)">Toque para mais informações.</small>
-                    <small ion-text color="light" *ngIf="vacina.detail === true">Toque para esconder detalhes.</small>
-                </ion-item>
-                <ion-item-options side="right">
-                    <button ion-button color="primary" (click)="openEdit(vacina.id)">
-                        <ion-icon name="create"></ion-icon>
-                        Editar
-                    </button>
-                    <button ion-button color="danger" (click)="openDelete(vacina.id)">
-                        <ion-icon name="trash"></ion-icon>
-                        Excluir
-                    </button>
-                </ion-item-options>
-            </ion-item-sliding>
-            <ion-item *ngIf="vacina.detail === true">
-                <ion-grid>
-                    <ion-row><h6 ion-text>Detalhes</h6></ion-row>
-                    <!--<ion-row>
-                        <ion-col>Tipo:</ion-col>
-                        <ion-col>{{ vacina.tipo }}</ion-col>
-                    </ion-row>-->
-                    <ion-row>
-                        <ion-col>Data:</ion-col>
-                        <ion-col>{{ dateFormat(vacina.data) }}</ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col>Observacões:</ion-col>
-                        <ion-col>
-                            <ion-item>{{ vacina.observacoes }}</ion-item>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col *ngFor="let anexo of vacina.anexos">
-                            <ion-badge color="light" text-center (click)="openAttachment(anexo)">
-                                <ion-icon name="attach"></ion-icon>
-                              {{ anexo.nome }}
-                            </ion-badge>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item (click)="expandView(vacina)">
+                <ion-avatar item-start text-center class="vacina-item-avatar">
+                    <h6 ion-text>{{ getDate(vacina.data).getDate() }}</h6>
+                    <small ion-text>{{ monthsName[getDate(vacina.data).getMonth()] }}</small>
+                </ion-avatar>
+                <h1 ion-text>{{ vacina.nome }}</h1>
+                <small ion-text color="light">Toque para mais informações.</small>
             </ion-item>
         </ion-item>
     </ion-list>

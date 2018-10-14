@@ -1,12 +1,65 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, ToastController, Platform } from 'ionic-angular';
+import { IonicPage,NavController, ToastController, Platform, ModalController, NavParams, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FileOpener } from '@ionic-native/file-opener';
 import { File, FileEntry } from '@ionic-native/file';
 import { VacinasEditPage } from '../vacinas-edit/vacinas-edit';
-import { VacinaProvider } from "../../providers/vacina/vacina";
+import { Vacina, VacinaProvider } from "../../providers/vacina/vacina";
 import { AlertController, Searchbar } from 'ionic-angular';
 import { timer } from 'rxjs/observable/timer';
+
+@Component({
+  templateUrl: 'detalhe.html'
+})
+export class VacinaDetalhesModal
+{
+  vacina : Vacina = null;
+  constructor(public params : NavParams,
+              public viewCtrl : ViewController,
+              private fOpener: FileOpener,
+              private file : File,
+              ) {
+    this.vacina = params.get('vacina');
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss().then(() => {});
+  }
+
+  /**
+   * Formata a data de aplicacao da vacina para exibicao.
+   * @param rawDate
+   */
+  dateFormat(rawDate : string) {
+	  let date = new Date(rawDate);
+	  return date.getDate() + '/' + (date.getMonth()+1) + '/' + (date.getFullYear());
+  }
+
+  /**
+   * Exibe um anexo ao clicar nele nos detalhes de uma vacina.
+   * @param anexo
+   */
+  openAttachment(anexo : any){
+    return this.file.resolveLocalFilesystemUrl(anexo.caminho)
+      .then ((entry : FileEntry) => {
+        if(entry){
+          entry.file(meta => {
+            this.fOpener.open(anexo.caminho, meta.type).then(()=> console.log('Abriu'))
+          }, error =>{
+            console.log(error);
+          })
+        }
+      });
+  }
+
+  backToDelete() {
+    this.viewCtrl.dismiss({ toDelete: true });
+  }
+
+  backToEdit() {
+    this.viewCtrl.dismiss({ toEdit: true });
+  }
+}
 
 @IonicPage()
 @Component({
@@ -63,6 +116,7 @@ export class VacinasPage {
    * @param alert Confirmacao de exclusao.
    * @param fOpener Exibicao de anexos.
    * @param file Metadados de anexos.
+   * @param modal Modal de detalhes.
    */
   constructor(public navCtrl: NavController,
               public platform : Platform,
@@ -71,7 +125,8 @@ export class VacinasPage {
               private toast : ToastController,
               private alert : AlertController,
               private fOpener: FileOpener,
-              private file : File) {
+              private file : File,
+              private modal : ModalController) {
 	  this.getVacinas();
   }
 
@@ -83,43 +138,24 @@ export class VacinasPage {
     return this.dbVacina.getAll().then(vacinas => this.vacinas = vacinas);
   }
 
-  /**
-   * Exibe um anexo ao clicar nele nos detalhes de uma vacina.
-   * @param anexo
-   */
-  openAttachment(anexo : any){
-    return this.file.resolveLocalFilesystemUrl(anexo.caminho)
-      .then ((entry : FileEntry) => {
-        if(entry){
-          entry.file(meta => {
-            this.fOpener.open(anexo.caminho, meta.type).then(()=> console.log('Abriu'))
-          }, error =>{
-            console.log(error);
-          })
-        }
-    });
-  }
 
   /**
    * Expande a visualizacao detalhada de uma vacina ao clicar sobre o item.
    * @param vacina
    */
-  expandView(vacina) {
-	  if(vacina.detail === undefined) {
-		  vacina.detail = true;
-	  }
-	  else {
-		  vacina.detail = !vacina.detail;
-	  }
-  }
-
-  /**
-   * Formata a data de aplicacao da vacina para exibicao.
-   * @param rawDate
-   */
-  dateFormat(rawDate : string) {
-	  let date = new Date(rawDate);
-	  return date.getDate() + '/' + (date.getMonth()+1) + '/' + (date.getFullYear());
+  expandView(vacina : Vacina) {
+    let modal = this.modal.create(VacinaDetalhesModal, { 'vacina': vacina });
+    modal.onDidDismiss(data => {
+      if(data) {
+        if(data.toDelete === true) {
+          this.openDelete(vacina);
+        }
+        else if(data.toEdit === true) {
+          this.openEdit(vacina.id);
+        }
+      }
+    });
+    modal.present();
   }
 
   /**
@@ -150,29 +186,34 @@ export class VacinasPage {
 
   /**
    * Confirma e exclui uma vacina selecionada pelo usuario.
-   * @param id
+   * @param vacina
    */
-  openDelete(id : number) {
+  openDelete(vacina : Vacina) {
     this.alert.create({
       title: 'Confirmação',
       message: 'Tem certeza que deseja excluir essa vacina?',
       buttons: [
         {
           text: 'Cancelar',
+          handler: () => this.expandView(vacina)
         },
         {
           text: 'Excluir',
           handler: () => {
-            this.dbVacina.delete(id).then(() => {
+            this.dbVacina.delete(vacina.id).then(() => {
               let idx = -1;
               for(let i = 0; i < this.vacinas.length; i++) {
-                if(this.vacinas[i].id == id) {
+                if(this.vacinas[i].id == vacina.id) {
                   idx = i;
                   break;
                 }
               }
               if(idx != -1) {
                 this.vacinas.splice(idx, 1);
+                this.toast.create({
+                  message: 'Vacina excluída!',
+                  duration: 3000
+                }).present();
               }
             });
           }

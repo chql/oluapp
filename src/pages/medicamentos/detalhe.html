@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Detalhes</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">Fechar</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label start>Nome</ion-label>
+      <ion-label end>{{ medicamento.nome }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Tarja</ion-label>
+      <ion-label end>{{ formatTarja(medicamento.tarja) }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Tipo</ion-label>
+      <ion-label end>{{ formatTipo(medicamento.tipo) }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Período</ion-label>
+      <ion-label text-wrap end>{{ dateFormat(medicamento.periodo_inicio) }} a {{ dateFormat(medicamento.periodo_fim) }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Causa</ion-label>
+      <ion-label end>{{ medicamento.causa }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Dosagem</ion-label>
+      <ion-label end>{{ medicamento.dosagem }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Quantidade</ion-label>
+      <ion-label end>{{ medicamento.quantidade }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Recorrência</ion-label>
+      <ion-label end>{{ medicamento.recorrencia }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Horários</ion-label>
+      <ion-label text-wrap end>{{ turnoFormat(medicamento.turno) }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Vencimento</ion-label>
+      <ion-label end>{{ dateFormat(medicamento.data_vencimento )}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Alérgico</ion-label>
+      <ion-label end>{{ medicamento.alergico ? 'Sim' : 'Não' }}</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-label>Observações</ion-label>
+    </ion-item>
+    <ion-item text-wrap>
+      <ion-label>{{ medicamento.observacoes }}</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-label start>Anexos</ion-label>
+    </ion-item>
+    <ion-item>
+      <div item-content>
+        <ion-list no-padding no-lines>
+          <ion-item *ngFor="let anexo of medicamento.anexos" no-lines>
+            <ion-badge color="light" text-center (click)="openAttachment(anexo)">
+              <ion-icon name="attach"></ion-icon>
+              {{ anexo.nome }}
+            </ion-badge>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col><button ion-button full icon-start color="secondary" (click)="backToEdit()">
+            <ion-icon name="create"></ion-icon>
+            Editar
+          </button></ion-col>
+          <ion-col><button ion-button full icon-start color="danger" (click)="backToDelete()">
+            <ion-icon name="trash"></ion-icon>
+            Excluir
+          </button></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>
