@@ -3,12 +3,7 @@ import {IonicPage, MenuController, NavController, Platform} from 'ionic-angular'
 
 import {TranslateService} from '@ngx-translate/core';
 import {DatabaseProvider} from "../../providers/database/database";
-import {
-  Medicamento,
-  MedicamentoProvider,
-  tarjaMedicamento,
-  tipoMedicamento
-} from "../../providers/medicamento/medicamento";
+import {Consulta, ConsultaProvider} from "../../providers/consulta/consulta";
 
 export interface Slide {
   title: string;
@@ -33,21 +28,20 @@ export class TestPage {
   }
 
   save () {
-    let m = new MedicamentoProvider(this.db);
-    let med = new Medicamento();
-    med.nome = "nome";
-    med.alergico = false;
-    med.causa = "causa";
-    med.data_vencimento = new Date();
-    //med.horario = new Date();
-    med.periodo_inicio = new Date();
-    med.periodo_fim = new Date();
-    med.dosagem = "hiperdosagem";
-    med.observacoes = "minhas obs";
-    med.tarja = tarjaMedicamento.vermelha;
-    med.tipo = tipoMedicamento.manipulado;
-    med.anexos = [];
-    console.log(m.search('XXX'));
+    let c = new ConsultaProvider(this.db);
+    let con = new Consulta();
+    con.nome = "Nome da Consulta";
+    con.especialidade = "especialidade da consulta";
+    con.data = new Date();
+    con.causa = "labirintite";
+    con.preco = 12.52;
+    con.exames = "fezes";
+    con.retorno = new Date();
+    con.observacoes = "obssssss";
+    con.anexos = [];
+    c.insert(con, -1);
+    console.log(c.getAll().then((data) => console.log(data)));
+
   }
   /*
     onSlideChangeStart(slider) {

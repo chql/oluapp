@@ -24,6 +24,7 @@ import { VacinasPage, VacinaDetalhesModal } from '../pages/vacinas/vacinas';
 import { VacinasEditPage } from '../pages/vacinas-edit/vacinas-edit';
 import { MedicamentosPage, MedicamentoDetalhesModal } from '../pages/medicamentos/medicamentos';
 import { MedicamentosEditPage } from '../pages/medicamentos-edit/medicamentos-edit';
+import { ConsultaProvider } from '../providers/consulta/consulta';
 
 
 // The translate loader needs to know where to load i18n files
@@ -95,7 +96,8 @@ export function provideSettings(storage: Storage) {
     DatabaseProvider,
     VacinaProvider,
     MedicamentoProvider,
-    AnexoProvider
+    AnexoProvider,
+    ConsultaProvider
   ]
 })
 export class AppModule { }
