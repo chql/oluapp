@@ -32,11 +32,10 @@ export class MedicamentoDetalhesModal
   }
 
   /**
-   * Formata a data de aplicacao da vacina para exibicao.
+   * Formata data para exibicao.
    * @param rawDate
    */
-  dateFormat(rawDate : string) {
-    let date = new Date(rawDate);
+  dateFormat(date : Date) {
     return date.getDate() + '/' + (date.getMonth()+1) + '/' + (date.getFullYear());
   }
 
@@ -69,7 +68,7 @@ export class MedicamentoDetalhesModal
   }
 
   /**
-   * Exibe um anexo ao clicar nele nos detalhes de uma vacina.
+   * Exibe um anexo ao clicar nele nos detalhes.
    * @param anexo
    */
   openAttachment(anexo: any) {
@@ -164,7 +163,7 @@ export class MedicamentosPage {
    * @param platform Controle do botao voltar.
    * @param translate Obtencao de mensagens da interface.
    * @param dbMedicamento Acesso ao banco de medicamentos.
-   * @param toast Exibicao de mensagens ao modificar uma vacina.
+   * @param toast Exibicao de mensagens.
    * @param alert Confirmacao de exclusao.
    * @param fOpener Exibicao de anexos.
    * @param file Metadados de anexos.
@@ -217,7 +216,6 @@ export class MedicamentosPage {
    */
   getDate(str: string) {
     let d = new Date(str);
-    d.setDate(d.getDate()+1);
     return d;
   }
 
@@ -341,14 +339,4 @@ export class MedicamentosPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad MedicamentosPage');
   }
-
-  /**
-   * Formata a data de aplicacao da vacina para exibicao.
-   * @param rawDate
-   */
-  dateFormat(raw : string) {
-    let date = new Date(raw);
-    return date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
-  }
-
 }

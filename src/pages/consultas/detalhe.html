@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Detalhes</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">Fechar</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label start>Nome</ion-label>
+      <ion-label end>{{ consulta.nome }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Especialidade</ion-label>
+      <ion-label end>{{ consulta.especialidade }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Data</ion-label>
+      <ion-label end>{{ dateFormat(consulta.data) }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Causa</ion-label>
+      <ion-label text-wrap end>{{ consulta.causa }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Preço</ion-label>
+      <ion-label end>R$ {{ consulta.preco }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Exames</ion-label>
+      <ion-label text-wrap end>{{ consulta.exames }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label start>Retorno</ion-label>
+      <ion-label end>{{ dateFormat(consulta.retorno) }}</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-label>Observações</ion-label>
+    </ion-item>
+    <ion-item text-wrap>
+      <ion-label>{{ consulta.observacoes }}</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-label start>Anexos</ion-label>
+    </ion-item>
+    <ion-item>
+      <div item-content>
+        <ion-list no-padding no-lines>
+          <ion-item *ngFor="let anexo of consulta.anexos" no-lines>
+            <ion-badge color="light" text-center (click)="openAttachment(anexo)">
+              <ion-icon name="attach"></ion-icon>
+              {{ anexo.nome }}
+            </ion-badge>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col><button ion-button full icon-start color="secondary" (click)="backToEdit()">
+            <ion-icon name="create"></ion-icon>
+            Editar
+          </button></ion-col>
+          <ion-col><button ion-button full icon-start color="danger" (click)="backToDelete()">
+            <ion-icon name="trash"></ion-icon>
+            Excluir
+          </button></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>

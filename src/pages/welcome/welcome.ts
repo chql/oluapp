@@ -4,6 +4,7 @@ import { IonicPage, MenuController, NavController, Platform } from 'ionic-angula
 import { TranslateService } from '@ngx-translate/core';
 import { VacinasPage } from '../vacinas/vacinas';
 import { MedicamentosPage } from '../medicamentos/medicamentos';
+import { ConsultasPage } from "../consultas/consultas";
 
 @IonicPage()
 @Component({
@@ -22,6 +23,10 @@ export class WelcomePage {
 
   openVacinas() {
     this.navCtrl.push(VacinasPage);
+  }
+
+  openConsultas() {
+    this.navCtrl.push(ConsultasPage);
   }
 
   ionViewDidEnter() {

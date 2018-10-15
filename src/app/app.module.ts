@@ -24,7 +24,10 @@ import { VacinasPage, VacinaDetalhesModal } from '../pages/vacinas/vacinas';
 import { VacinasEditPage } from '../pages/vacinas-edit/vacinas-edit';
 import { MedicamentosPage, MedicamentoDetalhesModal } from '../pages/medicamentos/medicamentos';
 import { MedicamentosEditPage } from '../pages/medicamentos-edit/medicamentos-edit';
+import { ConsultasPage, ConsultaDetalhesModal } from "../pages/consultas/consultas";
+import { ConsultasEditPage } from "../pages/consultas-edit/consultas-edit";
 import { ConsultaProvider } from '../providers/consulta/consulta';
+import {ConsultasEditPageModule} from "../pages/consultas-edit/consultas-edit.module";
 
 
 // The translate loader needs to know where to load i18n files
@@ -53,10 +56,13 @@ export function provideSettings(storage: Storage) {
     MyApp,
     VacinasPage,
     VacinasEditPage,
+    VacinaDetalhesModal,
     MedicamentosPage,
     MedicamentosEditPage,
-	  VacinaDetalhesModal,
-    MedicamentoDetalhesModal
+    MedicamentoDetalhesModal,
+    ConsultasPage,
+    ConsultasEditPage,
+    ConsultaDetalhesModal
   ],
   imports: [
     BrowserModule,
@@ -79,7 +85,10 @@ export function provideSettings(storage: Storage) {
     MedicamentosPage,
     MedicamentosEditPage,
 	  VacinaDetalhesModal,
-    MedicamentoDetalhesModal
+    MedicamentoDetalhesModal,
+    ConsultasPage,
+    ConsultasEditPage,
+    ConsultaDetalhesModal
   ],
   providers: [
     Camera,
