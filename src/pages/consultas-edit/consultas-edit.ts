@@ -146,6 +146,21 @@ export class ConsultasEditPage {
       message = 'Escolha um nome para a consulta';
     }
 
+    if(this.consultaEspecialidade.length < 1) {
+      hasError = true;
+      message = 'Especifique a especialidade da consulta.';
+    }
+
+    if(this.consultaCausa.length < 1) {
+      hasError = true;
+      message = 'Indique a causa para a consulta.';
+    }
+
+    if(this.consultaExames.length < 1) {
+      hasError = true;
+      message = 'Preencha os exames que foram solicitados antes ou após a consulta.';
+    }
+
     if(hasError) {
       this.alert.create({
         title: 'Erro',
