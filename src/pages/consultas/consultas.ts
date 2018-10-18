@@ -165,8 +165,9 @@ export class ConsultasPage {
    * Retorna estrutura detalhada para uma data.
    * @param str
    */
-  getDate(str : string) {
-    return new Date(str);
+  getDate(str: string) {
+    let d = new Date(str);
+    return d;
   }
 
   /**

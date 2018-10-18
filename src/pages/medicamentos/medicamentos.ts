@@ -185,7 +185,6 @@ export class MedicamentosPage {
    */
   getMedicamentos() {
     return this.dbMedicamento.getAll().then(medicamentos => {
-      console.log(this.medicamentos);
       this.medicamentos = medicamentos;
     });
   }

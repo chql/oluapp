@@ -88,8 +88,7 @@ export class DatabaseProvider {
 
   public formatDate(d: Date){
     if (d !== undefined) {
-      // return d.getUTCFullYear() + '-' + (d.getUTCMonth() + 1) + '-' + d.getUTCDate();
-      return d.toISOString();
+      return d.getUTCFullYear() + '-' + (d.getUTCMonth() + 1) + '-' + d.getUTCDate();
     }
     else
       return null;

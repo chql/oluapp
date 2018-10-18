@@ -27,12 +27,12 @@ export class VacinaDetalhesModal
   }
 
   /**
-   * Formata a data de aplicacao da vacina para exibicao.
+   * Formata data para exibicao.
    * @param rawDate
    */
-  dateFormat(rawDate : string) {
-	  let date = new Date(rawDate);
-	  return date.getDate() + '/' + (date.getMonth()+1) + '/' + (date.getFullYear());
+  dateFormat(str : string) {
+    let date = new Date(str);
+    return date.getDate() + '/' + (date.getMonth()+1) + '/' + (date.getFullYear());
   }
 
   /**
@@ -138,7 +138,6 @@ export class VacinasPage {
     return this.dbVacina.getAll().then(vacinas => this.vacinas = vacinas);
   }
 
-
   /**
    * Expande a visualizacao detalhada de uma vacina ao clicar sobre o item.
    * @param vacina
@@ -162,8 +161,9 @@ export class VacinasPage {
    * Retorna estrutura detalhada para uma data.
    * @param str
    */
-  getDate(str : string) {
-    return new Date(str);
+  getDate(str: string) {
+    let d = new Date(str);
+    return d;
   }
 
   /**

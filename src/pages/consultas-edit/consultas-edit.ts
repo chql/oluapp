@@ -12,24 +12,59 @@ import { FilePath } from '@ionic-native/file-path';
 })
 export class ConsultasEditPage {
 
+  /**
+   * Nome para a consulta.
+   */
   consultaNome : string = '';
 
+  /**
+   * Area de especialidade da consulta.
+   */
   consultaEspecialidade : string = '';
 
+  /**
+   * Data em que a consulta ocorreu.
+   */
   consultaData : string = (new Date()).toISOString();
 
+  /**
+   * Motivos para a consulta.
+   */
   consultaCausa : string = '';
 
+  /**
+   * Valor pago pela consulta.
+   */
   consultaPreco : number = 0;
 
+  /**
+   * Exames solicitados antes ou depois da consulta.
+   */
   consultaExames : string = '';
 
+  /**
+   * Prazo de retorno apos a consulta.
+   */
   consultaRetorno : string = (new Date()).toISOString();
 
+  /**
+   * Data maxima para intervalo de retorno.
+   */
+  retornoMaxDate : string = ((new Date()).getFullYear()+10).toString();
+
+  /**
+   * Observacoes.
+   */
   consultaObservacoes : string = '';
 
+  /**
+   * Anexos da consulta.
+   */
   consultaAnexos : Array<any> = [];
 
+  /**
+   * Id da consulta sendo editada.
+   */
   consultaId : number = null;
 
   /**

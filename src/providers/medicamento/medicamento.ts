@@ -32,6 +32,11 @@ export class MedicamentoProvider {
     m.turno = obj['turno'];
     m.observacoes = obj['observacoes'];
     m._data_criacao = obj['_data_criacao'];
+
+    m.data_vencimento.setTime(m.data_vencimento.getTime() + m.data_vencimento.getTimezoneOffset()*60000);
+    m.periodo_inicio.setTime(m.periodo_inicio.getTime()   + m.periodo_inicio.getTimezoneOffset()*60000);
+    m.periodo_fim.setTime(m.periodo_fim.getTime()         + m.periodo_fim.getTimezoneOffset()*60000);
+
     return m;
   }
 

@@ -38,7 +38,7 @@
     </ion-item>
     <ion-item>
       <ion-label stacked>Retorno</ion-label>
-      <ion-datetime [(ngModel)]="consultaRetorno"></ion-datetime>
+      <ion-datetime [(ngModel)]="consultaRetorno" max="{{retornoMaxDate}}"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label floating>Observações</ion-label>

@@ -26,6 +26,10 @@ export class ConsultaProvider {
     c.retorno = new Date(obj['retorno']);
     c.observacoes = obj['observacoes'];
     c._data_criacao = obj['_data_criacao'];
+
+    c.data.setTime(c.data.getTime() + c.data.getTimezoneOffset()*60000);
+    c.retorno.setTime(c.retorno.getTime() + c.retorno.getTimezoneOffset()*60000);
+
     return c;
   }
 
