@@ -66,6 +66,7 @@ export class VacinaProvider {
                 vacina.tipo = item.tipo;
                 vacina.observacoes = item.observacoes;
                 vacina._data_criacao = item._data_criacao;
+                vacina.data.setTime(vacina.data.getTime() + vacina.data.getTimezoneOffset()*60000);
                 this.anexos.getAttachment(vacina.id, CATEGORIA, (anexos) => {
                   vacina.anexos = anexos;
                   resolve(vacina);
@@ -95,7 +96,7 @@ export class VacinaProvider {
                 let t = data.rows.item(i);
                 v.id = t['id'];
                 v.nome = t['nome'];
-                v.data = t['data'];
+                v.data = new Date(t['data']);
                 v.observacoes = t['observacoes'];
                 this.anexos.getAttachment(v.id, CATEGORIA, (anexos) => {
                     v.anexos = anexos;
@@ -104,6 +105,7 @@ export class VacinaProvider {
                 v.tipo = t['tipo'];
                 v.lote = t['lote'];
                 v._data_criacao = t['_data_criacao'];
+                v.data.setTime(v.data.getTime() + v.data.getTimezoneOffset()*60000);
                 vacinas.push(v);
               }
               return vacinas;
@@ -155,7 +157,7 @@ export class VacinaProvider {
                 let t = data.rows.item(i);
                 v.id = t['id'];
                 v.nome = t['nome'];
-                v.data = t['data'];
+                v.data = new Date(t['data']);
                 v.observacoes = t['observacoes'];
                 this.anexos.getAttachment(v.id, CATEGORIA, (anexos) => {
                   v.anexos = anexos;
@@ -164,6 +166,7 @@ export class VacinaProvider {
                 v.tipo = t['tipo'];
                 v.lote = t['lote'];
                 v._data_criacao = t['_data_criacao'];
+                v.data.setTime(v.data.getTime() + v.data.getTimezoneOffset()*60000);
                 vacinas.push(v);
               }
               return vacinas;
