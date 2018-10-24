@@ -40,7 +40,7 @@ export class VacinasEditPage {
    * Data de aplicacao da vacina.
    * Inicia com data atual na criacao de nova vacina.
    */
-  vacinaData : string = (new Date()).toISOString();
+  vacinaData : string = (new Date(new Date().getTime() - new Date().getTimezoneOffset()*6000)).toISOString();
 
   /**
    * Anexos correspondentes a essa vacina.
