@@ -27,8 +27,10 @@ import { MedicamentosEditPage } from '../pages/medicamentos-edit/medicamentos-ed
 import { ConsultasPage, ConsultaDetalhesModal } from "../pages/consultas/consultas";
 import { ConsultasEditPage } from "../pages/consultas-edit/consultas-edit";
 import { ConsultaProvider } from '../providers/consulta/consulta';
-import {ConsultasEditPageModule} from "../pages/consultas-edit/consultas-edit.module";
 
+import { VacinasPageModule } from "../pages/vacinas/vacinas.module";
+import { MedicamentosPageModule } from "../pages/medicamentos/medicamentos.module";
+import { ConsultasPageModule } from "../pages/consultas/consultas.module";
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -54,19 +56,22 @@ export function provideSettings(storage: Storage) {
 @NgModule({
   declarations: [
     MyApp,
-    VacinasPage,
+    //VacinasPage,
     VacinasEditPage,
     VacinaDetalhesModal,
-    MedicamentosPage,
+    //MedicamentosPage,
     MedicamentosEditPage,
     MedicamentoDetalhesModal,
-    ConsultasPage,
+    //ConsultasPage,
     ConsultasEditPage,
     ConsultaDetalhesModal
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    VacinasPageModule,
+    MedicamentosPageModule,
+    ConsultasPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

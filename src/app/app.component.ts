@@ -20,6 +20,8 @@ export class MyApp {
     //{ title: 'Testes', component: 'TestPage'},
     { title: 'Principal', component: 'WelcomePage' },
     { title: 'Vacinas', component: 'VacinasPage' },
+    { title: 'Medicamentos', component: 'MedicamentosPage' },
+    { title: 'Consultas', component: 'ConsultasPage' }
   ];
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen, dbProvider: DatabaseProvider) {

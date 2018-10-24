@@ -345,3 +345,5 @@ export class MedicamentosEditPage {
    */
   cancelEditing() {
     this.navCtrl.pop();
+  }
+}
