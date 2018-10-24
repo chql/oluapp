@@ -21,7 +21,7 @@
 
 <ion-content>
   <ion-list no-lines>
-    <ion-item *ngFor="let m of medicamentos">
+    <ion-item *ngFor="let m of entries">
         <ion-item (click)="expandView(m)">
           <ion-avatar item-start text-center class="custom-item-avatar">
             <h6 ion-text>{{ getDate(m.periodo_inicio).getDate() }}</h6>

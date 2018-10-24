@@ -130,7 +130,7 @@ export class MedicamentosEditPage {
               private path : FilePath) {
 
     // recupera os parametros de navegacao
-    this.medicamentoId = this.navParams.get('medicamentoId');
+    this.medicamentoId = this.navParams.get('itemId');
     this.pageResult    = this.navParams.get('result');
 
     if(this.medicamentoId) {
