@@ -1,5 +1,5 @@
 <ion-header *ngIf="searchMode">
-  <ion-searchbar #qinput [(ngModel)]="search" (ionInput)="loadSearchResults()" (ionCancel)="leaveSearchMode()" showCancelButton="true" class="vacina-searchbar"></ion-searchbar>
+  <ion-searchbar #qinput [(ngModel)]="search" (ionInput)="loadSearchResults()" (ionCancel)="leaveSearchMode()" showCancelButton="true" class="vacina-searchbar" placeholder="Digite algo para buscar..."></ion-searchbar>
 </ion-header>
 
 <ion-header *ngIf="!searchMode">
