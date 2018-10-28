@@ -28,6 +28,7 @@ import { ConsultasPage, ConsultaDetalhesModal } from "../pages/consultas/consult
 import { ConsultasEditPage } from "../pages/consultas-edit/consultas-edit";
 import { ConsultaProvider } from '../providers/consulta/consulta';
 import {ConsultasEditPageModule} from "../pages/consultas-edit/consultas-edit.module";
+import { AlergiaProvider } from '../providers/alergia/alergia';
 
 
 // The translate loader needs to know where to load i18n files
@@ -106,7 +107,8 @@ export function provideSettings(storage: Storage) {
     VacinaProvider,
     MedicamentoProvider,
     AnexoProvider,
-    ConsultaProvider
+    ConsultaProvider,
+    AlergiaProvider
   ]
 })
 export class AppModule { }
