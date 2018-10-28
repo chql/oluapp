@@ -49,6 +49,9 @@ export class MedicamentoProvider {
             if(result.rows.length > 0 && result.rows.item(0)['id'] != id) {
               resolve(-1);
             }
+            if(med.periodo_inicio > med.periodo_fim){
+              resolve(-2);
+            }
             else {
               if(id > 0){
                 this.delete(id);
