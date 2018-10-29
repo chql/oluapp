@@ -201,7 +201,12 @@ export class ConsultasEditPage {
           this.navCtrl.pop();
         }
         else {
-          alert("Já existe uma consulta com mesmo nome na mesma data.");
+          if(result == -1){
+            alert("Já existe uma consulta com mesmo nome na mesma data.");
+          }
+          if(result == -2){
+            alert("A data de retorno deve ser maior que a data da consulta.");
+          }
         }
       });
     }
@@ -213,7 +218,12 @@ export class ConsultasEditPage {
           this.navCtrl.pop();
         }
         else {
-          alert("Já existe uma consulta com mesmo nome na mesma data.");
+          if(result == -1){
+            alert("Já existe uma consulta com mesmo nome na mesma data.");
+          }
+          if(result == -2){
+            alert("A data de retorno deve ser maior que a data da consulta.");
+          }
         }
       });
     }

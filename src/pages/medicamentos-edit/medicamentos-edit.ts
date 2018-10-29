@@ -291,7 +291,12 @@ export class MedicamentosEditPage {
           this.navCtrl.pop();
         }
 		else {
-			alert('Esse medicamento já foi cadastrado no mesmo período');
+            if(result == -1){
+                alert('Esse medicamento já foi cadastrado no mesmo período');
+            }
+            if(result == -2){
+                alert('A data final deve ser maior ou igual a inicial');
+            }
 		}
       }).catch(e => console.log(e));
     }
@@ -304,7 +309,12 @@ export class MedicamentosEditPage {
           this.navCtrl.pop();
         }
 		else {
-			alert('Esse medicamento já foi cadastrado no mesmo período');
+            if(result == -1){
+                alert('Esse medicamento já foi cadastrado no mesmo período');
+            }
+            if(result == -2){
+                alert('A data final deve ser maior ou igual a inicial');
+            }
 		}
       }).catch(e => console.log(e));
     }
