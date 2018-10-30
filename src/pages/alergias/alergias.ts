@@ -27,8 +27,6 @@ export class AlergiasPage extends ControladorBase  {
    * @param dbAlergia Banco de dados de alergia.
    * @param toast Exibicao de mensagens.
    * @param alert Confirmacao de exclusao.
-   * @param fOpener Exibicao de anexos.
-   * @param file Metadados de anexos.
    * @param modal Exibe detalhes de uma entrada.
    */
   constructor(public navCtrl: NavController,
@@ -37,8 +35,6 @@ export class AlergiasPage extends ControladorBase  {
               protected dbAlergia: AlergiaProvider,
               protected toast: ToastController,
               protected alert: AlertController,
-              private fOpener: FileOpener,
-              private file: File,
               protected modal : ModalController) {
     super(navCtrl, alert, toast, modal, platform, dbAlergia);
   }

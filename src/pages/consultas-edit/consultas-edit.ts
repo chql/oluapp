@@ -79,7 +79,7 @@ export class ConsultasEditPage {
               private path : FilePath,
               private alert : AlertController) {
 
-    this.consultaId = this.navParams.get('consultaId');
+    this.consultaId = this.navParams.get('itemId');
     this.pageResult = this.navParams.get('result');
 
     if(this.consultaId) {

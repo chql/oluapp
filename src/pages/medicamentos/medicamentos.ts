@@ -129,8 +129,6 @@ export class MedicamentosPage extends ControladorBase {
    * @param dbMedicamento Acesso ao banco de medicamentos.
    * @param toast Exibicao de mensagens.
    * @param alert Confirmacao de exclusao.
-   * @param fOpener Exibicao de anexos.
-   * @param file Metadados de anexos.
    * @param modal Exibe detalhes de uma entrada.
    */
   constructor(public navCtrl: NavController,
@@ -139,8 +137,6 @@ export class MedicamentosPage extends ControladorBase {
               protected dbMedicamento: MedicamentoProvider,
               protected toast: ToastController,
               protected alert: AlertController,
-              private fOpener: FileOpener,
-              private file: File,
               protected modal : ModalController) {
     super(navCtrl, alert, toast, modal, platform, dbMedicamento);
   }

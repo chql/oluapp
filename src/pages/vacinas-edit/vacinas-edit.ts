@@ -70,7 +70,7 @@ export class VacinasEditPage {
               private path : FilePath) {
 
     // recupera os parametros de navegacao
-    this.vacinaId = this.navParams.get('vacinaId');
+    this.vacinaId = this.navParams.get('itemId');
     this.pageResult = this.navParams.get('result');
 
     if(this.vacinaId) {

@@ -20,7 +20,7 @@
 
 <ion-content>
   <ion-list no-lines>
-    <ion-item *ngFor="let consulta of consultas">
+    <ion-item *ngFor="let consulta of entries">
       <ion-item (click)="expandView(consulta)">
         <ion-avatar item-start text-center class="custom-item-avatar">
           <h6 ion-text>{{ getDate(consulta.data).getDate() }}</h6>

@@ -20,7 +20,7 @@
 
 <ion-content>
     <ion-list no-lines>
-        <ion-item *ngFor="let vacina of vacinas">
+        <ion-item *ngFor="let vacina of entries">
             <ion-item (click)="expandView(vacina)">
                 <ion-avatar item-start text-center class="vacina-item-avatar">
                     <h6 ion-text>{{ getDate(vacina.data).getDate() }}</h6>
