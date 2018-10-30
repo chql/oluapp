@@ -1,17 +1,62 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, Platform, ToastController, ModalController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ViewController, ToastController, ModalController, AlertController } from 'ionic-angular';
 import { ControladorBase } from "../../commom/controlador";
 import { TranslateService } from '@ngx-translate/core';
 import { FileOpener } from '@ionic-native/file-opener';
-import { File } from '@ionic-native/file';
+import { File, FileEntry } from '@ionic-native/file';
 
-import { AlergiaProvider } from "../../providers/alergia/alergia";
+import { AlergiaProvider, Alergia } from "../../providers/alergia/alergia";
 import { AlergiasEditPage } from "../alergias-edit/alergias-edit";
 
 @Component({
   templateUrl: 'detalhe.html'
 })
 export class AlergiaDetalhesModal {
+  alergia : Alergia = null;
+
+  /**
+   *
+   * @param params
+   * @param viewCtrl
+   * @param fOpener
+   * @param file
+   */
+  constructor(public params : NavParams,
+              public viewCtrl : ViewController,
+              private fOpener: FileOpener,
+              private file : File,
+  ) {
+    this.alergia = params.get('item');
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss().then(() => {});
+  }
+
+  backToDelete() {
+    this.viewCtrl.dismiss({ toDelete: true });
+  }
+
+  backToEdit() {
+    this.viewCtrl.dismiss({ toEdit: true });
+  }
+
+  /**
+   * Exibe um anexo ao clicar nele nos detalhes.
+   * @param anexo
+   */
+  openAttachment(anexo: any) {
+    return this.file.resolveLocalFilesystemUrl(anexo.caminho)
+      .then((entry: FileEntry) => {
+        if (entry) {
+          entry.file(meta => {
+            this.fOpener.open(anexo.caminho, meta.type).then(() => console.log('Abriu'))
+          }, error => {
+            console.log(error);
+          })
+        }
+      });
+  }
 }
 @IonicPage()
 @Component({
