@@ -1,5 +1,4 @@
-import { MedicamentosEditPage } from "../pages/medicamentos-edit/medicamentos-edit";
-import { AlertController, IonicPage, NavController, Platform, Searchbar, ToastController, NavParams, ViewController, ModalController} from 'ionic-angular';
+import { AlertController, NavController, Platform, Searchbar, ToastController, ModalController} from 'ionic-angular';
 import { ViewChild } from '@angular/core';
 import { timer } from 'rxjs/observable/timer';
 

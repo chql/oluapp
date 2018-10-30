@@ -21,7 +21,8 @@ export class MyApp {
     { title: 'Principal', component: 'WelcomePage' },
     { title: 'Vacinas', component: 'VacinasPage' },
     { title: 'Medicamentos', component: 'MedicamentosPage' },
-    { title: 'Consultas', component: 'ConsultasPage' }
+    { title: 'Consultas', component: 'ConsultasPage' },
+    { title: 'Alergias', component: 'AlergiasPage' }
   ];
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen, dbProvider: DatabaseProvider) {

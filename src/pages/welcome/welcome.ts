@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { VacinasPage } from '../vacinas/vacinas';
 import { MedicamentosPage } from '../medicamentos/medicamentos';
 import { ConsultasPage } from "../consultas/consultas";
+import { AlergiasPage } from "../alergias/alergias";
 
 @IonicPage()
 @Component({
@@ -27,6 +28,10 @@ export class WelcomePage {
 
   openConsultas() {
     this.navCtrl.push(ConsultasPage);
+  }
+
+  openAlergias() {
+    this.navCtrl.push(AlergiasPage);
   }
 
   ionViewDidEnter() {

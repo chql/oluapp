@@ -1,6 +1,6 @@
 import { ControladorBase } from '../../commom/controlador';
 import { Component } from '@angular/core';
-import {AlertController, IonicPage, NavController, Platform, Searchbar, ToastController, NavParams, ViewController, ModalController} from 'ionic-angular';
+import {AlertController, IonicPage, NavController, Platform, ToastController, NavParams, ViewController, ModalController} from 'ionic-angular';
 import {TranslateService} from '@ngx-translate/core';
 import {FileOpener} from '@ionic-native/file-opener';
 import {File, FileEntry} from '@ionic-native/file';

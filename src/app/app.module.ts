@@ -19,6 +19,8 @@ import { DatabaseProvider } from '../providers/database/database';
 import { VacinaProvider } from '../providers/vacina/vacina';
 import { MedicamentoProvider } from '../providers/medicamento/medicamento';
 import { AnexoProvider } from '../providers/anexo/anexo';
+import { ConsultaProvider } from '../providers/consulta/consulta';
+import { AlergiaProvider } from '../providers/alergia/alergia';
 
 import { VacinasPage, VacinaDetalhesModal } from '../pages/vacinas/vacinas';
 import { VacinasEditPage } from '../pages/vacinas-edit/vacinas-edit';
@@ -26,12 +28,14 @@ import { MedicamentosPage, MedicamentoDetalhesModal } from '../pages/medicamento
 import { MedicamentosEditPage } from '../pages/medicamentos-edit/medicamentos-edit';
 import { ConsultasPage, ConsultaDetalhesModal } from "../pages/consultas/consultas";
 import { ConsultasEditPage } from "../pages/consultas-edit/consultas-edit";
-import { ConsultaProvider } from '../providers/consulta/consulta';
-import { AlergiaProvider } from '../providers/alergia/alergia';
+import { AlergiasPage, AlergiaDetalhesModal } from "../pages/alergias/alergias";
+import { AlergiasEditPage } from "../pages/alergias-edit/alergias-edit";
 
 import { VacinasPageModule } from "../pages/vacinas/vacinas.module";
 import { MedicamentosPageModule } from "../pages/medicamentos/medicamentos.module";
 import { ConsultasPageModule } from "../pages/consultas/consultas.module";
+import { AlergiasPageModule } from "../pages/alergias/alergias.module";
+
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -65,7 +69,9 @@ export function provideSettings(storage: Storage) {
     MedicamentoDetalhesModal,
     //ConsultasPage,
     ConsultasEditPage,
-    ConsultaDetalhesModal
+    ConsultaDetalhesModal,
+    AlergiasEditPage,
+    AlergiaDetalhesModal
   ],
   imports: [
     BrowserModule,
@@ -73,6 +79,7 @@ export function provideSettings(storage: Storage) {
     VacinasPageModule,
     MedicamentosPageModule,
     ConsultasPageModule,
+    AlergiasPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -88,13 +95,16 @@ export function provideSettings(storage: Storage) {
     MyApp,
     VacinasPage,
     VacinasEditPage,
+    VacinaDetalhesModal,
     MedicamentosPage,
     MedicamentosEditPage,
-	  VacinaDetalhesModal,
     MedicamentoDetalhesModal,
     ConsultasPage,
     ConsultasEditPage,
-    ConsultaDetalhesModal
+    ConsultaDetalhesModal,
+    AlergiasPage,
+    AlergiasEditPage,
+    AlergiaDetalhesModal
   ],
   providers: [
     Camera,

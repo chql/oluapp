@@ -109,7 +109,7 @@ export class MedicamentosEditPage {
 
   /**
    * Resultado retornado para tela de listagem.
-   * Utilizado em caso de uma nova vacina ser adicionada ou alterada.
+   * Utilizado em caso da entrada ser adicionada ou alterada.
    */
   pageResult : any = { result: false, message: '' };
 
@@ -255,7 +255,7 @@ export class MedicamentosEditPage {
   }
 
   /**
-   * Salva os dados da vacina que foi adicionada ou modificada.
+   * Salva os dados da entrada que foi adicionada ou modificada.
    * Preenche o resultado da adicao/modificacao e retorna para tela anterior.
    */
   submitSave() {
