@@ -21,12 +21,12 @@
 <ion-content>
   <ion-list no-lines>
     <ion-item *ngFor="let alergia of entries">
-      <ion-item (click)="expandView(m)">
+      <ion-item (click)="expandView(alergia)">
         <ion-avatar item-start text-center class="custom-item-avatar">
-          <h6 ion-text>{{ alergia.id }}</h6>
-          <small ion-text>{{ alergia.id }}</small>
+          <h6 ion-text>{{ alergia._data_criacao.getDate() }}</h6>
+          <small ion-text>{{ monthsName[alergia._data_criacao.getMonth()] }}</small>
         </ion-avatar>
-        <h1 ion-text>{{ alergia.id }}</h1>
+        <h1 ion-text>Alergia {{ alergia.id }}</h1>
         <small ion-text color="light">Toque para mais informações.</small>
       </ion-item>
     </ion-item>

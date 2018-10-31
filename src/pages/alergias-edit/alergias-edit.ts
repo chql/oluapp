@@ -13,6 +13,16 @@ import { AlergiaProvider, Alergia } from "../../providers/alergia/alergia";
 export class AlergiasEditPage {
 
   /**
+   * Tipo da alergia.
+   */
+  alergiaTipo : string = '';
+
+  /**
+   * Nivel da alergia.
+   */
+  alergiaNivel : string = '';
+
+  /**
    * Sintomas da alergia.
    */
   alergiaSintomas : string = '';
@@ -60,6 +70,8 @@ export class AlergiasEditPage {
 
     if(this.alergiaId) {
       this.dbAlergia.get(this.alergiaId).then(alergia => {
+        //this.alergiaTipo = alergia.tipo;
+        //this.alergiaNivel = alergia.nivel;
         this.alergiaSintomas = alergia.sintomas;
         this.alergiaObservacoes = alergia.observacoes;
         this.alergiaAnexos = alergia.anexos;
@@ -101,6 +113,8 @@ export class AlergiasEditPage {
 
     let novaAlergia = new Alergia();
 
+    //novaAlergia.tipo = this.alergiaTipo;
+    //novaAlergia.nivel = this.alergiaNivel;
     novaAlergia.sintomas = this.alergiaSintomas;
     novaAlergia.observacoes = this.alergiaObservacoes;
     novaAlergia.anexos = this.alergiaAnexos;

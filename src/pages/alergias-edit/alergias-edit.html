@@ -13,6 +13,18 @@
   <ion-list no-lines>
     <ion-item><h1 ion-text text-center>Inserir Alergia</h1></ion-item>
     <ion-item>
+      <ion-label stacked>Tipo</ion-label>
+      <ion-select [(ngModel)]="alergiaTipo">
+
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Nivel</ion-label>
+      <ion-select [(ngModel)]="alergiaNivel">
+
+      </ion-select>
+    </ion-item>
+    <ion-item>
       <ion-label stacked>Sintomas</ion-label>
       <ion-textarea [(ngModel)]="alergiaSintomas"></ion-textarea>
     </ion-item>
