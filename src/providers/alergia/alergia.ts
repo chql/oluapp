@@ -139,11 +139,22 @@ export class AlergiaProvider {
 }
 
 export enum tipoAlergia {
-  // TODO: adicionar conteudo conforme especificacao
+  anafilaxia = 'anafilaxia',
+  complexo_imune = 'complexo imune',
+  bacterianas = 'bacteriana',
+  virus = 'vírus',
+  parasitaria = 'parasitária',
+  proteina_purificada = 'proteína purificada',
+  substancia_quimica = 'substância química',
+  alimentar = 'alergia alimentar'
 }
 
 export enum nivelAlergia {
   // TODO: adicionar conteudo conforme especificacao
+  leve = 1,
+  moderado = 2,
+  grave = 3,
+  gravissimo = 4
 }
 
 export class Alergia {

@@ -86,7 +86,7 @@ export class DatabaseProvider {
         tipo VARCHAR(64) NOT NULL,
         nivel VARCHAR(64) NOT NULL,
         sintomas VARCHAR(128) NOT NULL,
-        observacoes TEXT,
+        observacoes TEXT NOT NULL,
         _data_criacao DATETIME DEFAULT current_timestamp NOT NULL
       );`]
     ])

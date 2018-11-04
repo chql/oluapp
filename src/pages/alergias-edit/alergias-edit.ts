@@ -3,7 +3,7 @@ import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angula
 import {FileChooser} from '@ionic-native/file-chooser';
 import {FilePath} from '@ionic-native/file-path';
 
-import { AlergiaProvider, Alergia } from "../../providers/alergia/alergia";
+import {AlergiaProvider, Alergia, tipoAlergia, nivelAlergia} from "../../providers/alergia/alergia";
 
 @IonicPage()
 @Component({
@@ -15,12 +15,12 @@ export class AlergiasEditPage {
   /**
    * Tipo da alergia.
    */
-  alergiaTipo : string = '';
+  alergiaTipo : tipoAlergia;
 
   /**
    * Nivel da alergia.
    */
-  alergiaNivel : string = '';
+  alergiaNivel : nivelAlergia;
 
   /**
    * Sintomas da alergia.
@@ -70,8 +70,8 @@ export class AlergiasEditPage {
 
     if(this.alergiaId) {
       this.dbAlergia.get(this.alergiaId).then(alergia => {
-        //this.alergiaTipo = alergia.tipo;
-        //this.alergiaNivel = alergia.nivel;
+        this.alergiaTipo = alergia.tipo;
+        this.alergiaNivel = alergia.nivel;
         this.alergiaSintomas = alergia.sintomas;
         this.alergiaObservacoes = alergia.observacoes;
         this.alergiaAnexos = alergia.anexos;
@@ -113,8 +113,8 @@ export class AlergiasEditPage {
 
     let novaAlergia = new Alergia();
 
-    //novaAlergia.tipo = this.alergiaTipo;
-    //novaAlergia.nivel = this.alergiaNivel;
+    novaAlergia.tipo = this.alergiaTipo;
+    novaAlergia.nivel = this.alergiaNivel;
     novaAlergia.sintomas = this.alergiaSintomas;
     novaAlergia.observacoes = this.alergiaObservacoes;
     novaAlergia.anexos = this.alergiaAnexos;
