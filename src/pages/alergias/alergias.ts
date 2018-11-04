@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FileOpener } from '@ionic-native/file-opener';
 import { File, FileEntry } from '@ionic-native/file';
 
-import { AlergiaProvider, Alergia } from "../../providers/alergia/alergia";
+import { AlergiaProvider, Alergia, tipoAlergia, nivelAlergia } from "../../providers/alergia/alergia";
 import { AlergiasEditPage } from "../alergias-edit/alergias-edit";
 
 @Component({
@@ -39,6 +39,14 @@ export class AlergiaDetalhesModal {
 
   backToEdit() {
     this.viewCtrl.dismiss({ toEdit: true });
+  }
+
+  formatTipoAlergia(tipo : string) {
+    return AlergiasEditPage.formatTipoAlergia(tipo);
+  }
+
+  formatNivelAlergia(nivel : number) {
+    return AlergiasEditPage.formatNivelAlergia(nivel);
   }
 
   /**
@@ -98,5 +106,13 @@ export class AlergiasPage extends ControladorBase  {
 
   getEditPage() {
     return AlergiasEditPage;
+  }
+
+  formatTipoAlergia(tipo : string) {
+    return AlergiasEditPage.formatTipoAlergia(tipo);
+  }
+
+  formatNivelAlergia(nivel : number) {
+    return AlergiasEditPage.formatNivelAlergia(nivel);
   }
 }

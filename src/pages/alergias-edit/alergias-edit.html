@@ -13,19 +13,29 @@
   <ion-list no-lines>
     <ion-item><h1 ion-text text-center>Inserir Alergia</h1></ion-item>
     <ion-item>
-      <ion-label stacked>Tipo</ion-label>
+      <ion-label stacked>Tipo *</ion-label>
       <ion-select [(ngModel)]="alergiaTipo">
-
+        <ion-option value="anafilaxia">Anafilaxia</ion-option>
+        <ion-option value="complexo_imune">Complexo imune</ion-option>
+        <ion-option value="bacterianas">Bacteriana</ion-option>
+        <ion-option value="virus">Vírus</ion-option>
+        <ion-option value="parasitaria">Parasitária</ion-option>
+        <ion-option value="proteina_purificada">Proteína purificada</ion-option>
+        <ion-option value="substancia_quimica">Substância química</ion-option>
+        <ion-option value="alimentar">Alergia alimentar</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label stacked>Nivel</ion-label>
+      <ion-label stacked>Nivel *</ion-label>
       <ion-select [(ngModel)]="alergiaNivel">
-
+        <ion-option value="1">Leve</ion-option>
+        <ion-option value="2">Moderado</ion-option>
+        <ion-option value="3">Grave</ion-option>
+        <ion-option value="4">Gravíssimo</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label stacked>Sintomas</ion-label>
+      <ion-label stacked>Sintomas *</ion-label>
       <ion-textarea [(ngModel)]="alergiaSintomas"></ion-textarea>
     </ion-item>
     <ion-item>

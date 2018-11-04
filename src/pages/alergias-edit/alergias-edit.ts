@@ -15,12 +15,12 @@ export class AlergiasEditPage {
   /**
    * Tipo da alergia.
    */
-  alergiaTipo : tipoAlergia;
+  alergiaTipo : string = AlergiasEditPage.getAlergiaTipo(tipoAlergia.alimentar);
 
   /**
    * Nivel da alergia.
    */
-  alergiaNivel : nivelAlergia;
+  alergiaNivel : number = nivelAlergia.leve;
 
   /**
    * Sintomas da alergia.
@@ -63,14 +63,13 @@ export class AlergiasEditPage {
               private alert : AlertController,
               private fileChooser : FileChooser,
               private path : FilePath) {
-
     // recupera os parametros de navegacao
     this.alergiaId = this.navParams.get('itemId');
     this.pageResult = this.navParams.get('result');
 
     if(this.alergiaId) {
       this.dbAlergia.get(this.alergiaId).then(alergia => {
-        this.alergiaTipo = alergia.tipo;
+        this.alergiaTipo = AlergiasEditPage.getAlergiaTipo(alergia.tipo);
         this.alergiaNivel = alergia.nivel;
         this.alergiaSintomas = alergia.sintomas;
         this.alergiaObservacoes = alergia.observacoes;
@@ -113,7 +112,7 @@ export class AlergiasEditPage {
 
     let novaAlergia = new Alergia();
 
-    novaAlergia.tipo = this.alergiaTipo;
+    novaAlergia.tipo = tipoAlergia[this.alergiaTipo];
     novaAlergia.nivel = this.alergiaNivel;
     novaAlergia.sintomas = this.alergiaSintomas;
     novaAlergia.observacoes = this.alergiaObservacoes;
@@ -187,5 +186,40 @@ export class AlergiasEditPage {
    */
   cancelEditing() {
     this.navCtrl.pop();
+  }
+
+  /**
+   * Converte tipo da vacina para valor do campo de opcao.
+   */
+  static getAlergiaTipo(tipo : string) {
+    for (let t in tipoAlergia)
+      if(tipo == tipoAlergia[t])
+        return t;
+      return null;
+  }
+
+  /**
+   * Formata o tipo da alergia para exibicao.
+   * @param t
+   */
+  static formatTipoAlergia(valor : string) {
+    if(valor == tipoAlergia.anafilaxia) return 'Anafilaxia';
+    if(valor == tipoAlergia.complexo_imune) return 'Complexo imune';
+    if(valor == tipoAlergia.bacterianas) return 'Bacteriana';
+    if(valor == tipoAlergia.virus) return 'Vírus';
+    if(valor == tipoAlergia.parasitaria) return 'Parasitária';
+    if(valor == tipoAlergia.proteina_purificada) return 'Proteína purificada';
+    if(valor == tipoAlergia.substancia_quimica) return 'Substância química';
+    if(valor == tipoAlergia.alimentar) return 'Alergia alimentar';
+  }
+
+  /**
+   * Formata o nivel de gravidade de alergia para exibicao.
+   */
+  static formatNivelAlergia(valor : number) {
+    if(valor == nivelAlergia.leve) return 'Leve';
+    if(valor == nivelAlergia.moderado) return 'Moderado';
+    if(valor == nivelAlergia.grave) return 'Grave';
+    if(valor == nivelAlergia.gravissimo) return 'Gravíssimo';
   }
 }

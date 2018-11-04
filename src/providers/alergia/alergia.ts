@@ -17,7 +17,7 @@ export class AlergiaProvider {
     let a = new Alergia();
     a.id = obj['id'];
     a.tipo = obj['tipo'];
-    a.nivel = obj['nivel'];
+    a.nivel = parseInt(obj['nivel']);
     a.sintomas = obj['sintomas'];
     a.observacoes = obj['observacoes'];
     a._data_criacao = new Date(obj['_data_criacao']);
@@ -36,8 +36,7 @@ export class AlergiaProvider {
             this.delete(id);
           }
           let sql = `INSERT INTO alergia (tipo, nivel, sintomas, observacoes) VALUES (?, ?, ?, ?)`;
-          //let data = [ale.tipo, ale.nivel, ale.sintomas, ale.observacoes];
-          let data = ["", "", ale.sintomas, ale.observacoes];
+          let data = [ale.tipo, ale.nivel, ale.sintomas, ale.observacoes];
           db.executeSql(sql, data)
             .then((data: any) => {
               for (let i = 0; i < ale.anexos.length; i++) {
