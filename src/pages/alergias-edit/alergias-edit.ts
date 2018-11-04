@@ -90,6 +90,11 @@ export class AlergiasEditPage {
       message = 'Preencha os sintomas provinientes da alergia';
     }
 
+    if(this.alergiaObservacoes.length < 1) {
+      hasError = true;
+      message = 'Adicione observações para a alergia';
+    }
+
     if(hasError) {
       this.alert.create({
         title: 'Erro',

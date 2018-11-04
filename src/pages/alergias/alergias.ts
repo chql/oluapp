@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FileOpener } from '@ionic-native/file-opener';
 import { File, FileEntry } from '@ionic-native/file';
 
-import { AlergiaProvider, Alergia, tipoAlergia, nivelAlergia } from "../../providers/alergia/alergia";
+import { AlergiaProvider, Alergia } from "../../providers/alergia/alergia";
 import { AlergiasEditPage } from "../alergias-edit/alergias-edit";
 
 @Component({
