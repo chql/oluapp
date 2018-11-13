@@ -7,7 +7,7 @@ import {AnexoProvider} from "../anexo/anexo";
 const CATEGORIA = 5;
 
 @Injectable()
-export class ConsultaProvider {
+export class CirurgiaProvider {
   anexos: AnexoProvider;
 
   constructor(private dbProvider: DatabaseProvider) {
