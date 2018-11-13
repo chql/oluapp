@@ -88,6 +88,19 @@ export class DatabaseProvider {
         sintomas VARCHAR(128) NOT NULL,
         observacoes TEXT NOT NULL,
         _data_criacao DATETIME DEFAULT current_timestamp NOT NULL
+      );`],
+      [`CREATE TABLE IF NOT EXISTS cirurgia (
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        nome VARCHAR(64) NOT NULL,
+        tipo VARCHAR(64) NOT NULL, 
+        data DATE NOT NULL, 
+        anestesia VARCHAR(64) NOT NULL, 
+        motivo VARCHAR(64) NOT NULL, 
+        especialidade VARCHAR(64) NOT NULL, 
+        medico VARCHAR(64) NOT NULL, 
+        local VARCHAR(64) NOT NULL,
+        observacoes TEXT,
+        _data_criacao DATETIME DEFAULT current_timestamp NOT NULL
       );`]
     ])
       .then(() => console.log('Tabelas criadas'))
