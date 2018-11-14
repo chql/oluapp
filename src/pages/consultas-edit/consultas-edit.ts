@@ -235,8 +235,4 @@ export class ConsultasEditPage {
   cancelEditing() {
     this.navCtrl.pop();
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ConsultasEditPage');
-  }
 }

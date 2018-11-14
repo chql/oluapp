@@ -1,0 +1,81 @@
+<ion-header>
+
+  <ion-navbar color="background" hideBackButton="true">
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Cirurgias</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-list no-lines>
+    <ion-item><h1 ion-text text-center>Inserir Cirurgia</h1></ion-item>
+    <ion-item>
+      <ion-label floating>Nome da cirurgia *</ion-label>
+      <ion-input [(ngModel)]="cirurgiaNome"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Tipo da cirurgia *</ion-label>
+      <ion-input [(ngModel)]="cirurgiaTipo"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Data *</ion-label>
+      <ion-datetime [(ngModel)]="cirurgiaData" max="{{cirurgiaMaxDate}}"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Anestesia(s) *</ion-label>
+      <ion-input [(ngModel)]="cirurgiaAnestesia"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Motivo *</ion-label>
+      <ion-input [(ngModel)]="cirurgiaMotivo"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Especialidade *</ion-label>
+      <ion-input [(ngModel)]="cirurgiaEspecialidade"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Medico *</ion-label>
+      <ion-input [(ngModel)]="cirurgiaMedico"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Local *</ion-label>
+      <ion-input [(ngModel)]="cirurgiaLocal"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Observações</ion-label>
+      <ion-textarea lines="3" [(ngModel)]="cirurgiaObservacoes"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-grid>
+        <ion-row *ngFor="let anexo of cirurgiaAnexos">
+          <ion-col>
+            <ion-badge color="light" text-center>
+              <ion-icon name="attach"></ion-icon>
+              {{ anexo.nome }}
+              <button ion-button color="danger" (click)="removeAttachment(anexo)">
+                <ion-icon name="trash"></ion-icon>
+              </button>
+            </ion-badge>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <button ion-button icon-only color="primary" (click)="addAttachment()">
+            <ion-icon name="attach"></ion-icon>
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col><button ion-button full color="secondary" (click)="submitSave()">Salvar</button></ion-col>
+          <ion-col><button ion-button full color="danger" (click)="cancelEditing()">Cancelar</button></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>

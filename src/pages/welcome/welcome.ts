@@ -6,6 +6,7 @@ import { VacinasPage } from '../vacinas/vacinas';
 import { MedicamentosPage } from '../medicamentos/medicamentos';
 import { ConsultasPage } from "../consultas/consultas";
 import { AlergiasPage } from "../alergias/alergias";
+import { CirurgiasPage } from "../cirurgias/cirurgias";
 
 @IonicPage()
 @Component({
@@ -32,6 +33,10 @@ export class WelcomePage {
 
   openAlergias() {
     this.navCtrl.push(AlergiasPage);
+  }
+
+  openCirurgias() {
+    this.navCtrl.push(CirurgiasPage);
   }
 
   ionViewDidEnter() {

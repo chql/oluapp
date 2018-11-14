@@ -21,6 +21,7 @@ import { MedicamentoProvider } from '../providers/medicamento/medicamento';
 import { AnexoProvider } from '../providers/anexo/anexo';
 import { ConsultaProvider } from '../providers/consulta/consulta';
 import { AlergiaProvider } from '../providers/alergia/alergia';
+import { CirurgiaProvider } from '../providers/cirurgia/cirurgia';
 
 import { VacinasPage, VacinaDetalhesModal } from '../pages/vacinas/vacinas';
 import { VacinasEditPage } from '../pages/vacinas-edit/vacinas-edit';
@@ -30,12 +31,14 @@ import { ConsultasPage, ConsultaDetalhesModal } from "../pages/consultas/consult
 import { ConsultasEditPage } from "../pages/consultas-edit/consultas-edit";
 import { AlergiasPage, AlergiaDetalhesModal } from "../pages/alergias/alergias";
 import { AlergiasEditPage } from "../pages/alergias-edit/alergias-edit";
+import { CirurgiasPage, CirurgiaDetalhesModal } from "../pages/cirurgias/cirurgias";
+import { CirurgiasEditPage } from "../pages/cirurgias-edit/cirurgias-edit";
 
 import { VacinasPageModule } from "../pages/vacinas/vacinas.module";
 import { MedicamentosPageModule } from "../pages/medicamentos/medicamentos.module";
 import { ConsultasPageModule } from "../pages/consultas/consultas.module";
 import { AlergiasPageModule } from "../pages/alergias/alergias.module";
-import { CirurgiaProvider } from '../providers/cirurgia/cirurgia';
+import { CirurgiasPageModule } from "../pages/cirurgias/cirurgias.module";
 
 
 // The translate loader needs to know where to load i18n files
@@ -72,7 +75,9 @@ export function provideSettings(storage: Storage) {
     ConsultasEditPage,
     ConsultaDetalhesModal,
     AlergiasEditPage,
-    AlergiaDetalhesModal
+    AlergiaDetalhesModal,
+    CirurgiasEditPage,
+    CirurgiaDetalhesModal
   ],
   imports: [
     BrowserModule,
@@ -81,6 +86,7 @@ export function provideSettings(storage: Storage) {
     MedicamentosPageModule,
     ConsultasPageModule,
     AlergiasPageModule,
+    CirurgiasPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -105,7 +111,10 @@ export function provideSettings(storage: Storage) {
     ConsultaDetalhesModal,
     AlergiasPage,
     AlergiasEditPage,
-    AlergiaDetalhesModal
+    AlergiaDetalhesModal,
+    CirurgiasPage,
+    CirurgiasEditPage,
+    CirurgiaDetalhesModal
   ],
   providers: [
     Camera,

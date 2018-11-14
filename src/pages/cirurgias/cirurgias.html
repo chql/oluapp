@@ -1,0 +1,37 @@
+<ion-header *ngIf="searchMode">
+  <ion-searchbar #qinput [(ngModel)]="search" (ionInput)="loadSearchResults()" (ionCancel)="leaveSearchMode()" showCancelButton="true" class="custom-searchbar" placeholder="Digite algo para buscar..."></ion-searchbar>
+</ion-header>
+
+<ion-header *ngIf="!searchMode">
+
+  <ion-navbar color="background" hideBackButton="true">
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Cirurgias</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="enterSearchMode()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-list no-lines>
+    <ion-item *ngFor="let cirurgia of entries">
+      <ion-item (click)="expandView(cirurgia)">
+        <ion-avatar item-start text-center class="custom-item-avatar">
+          <h6 ion-text>{{ cirurgia.data.getDate() }}</h6>
+          <small ion-text>{{ monthsName[cirurgia.data.getMonth()] }}</small>
+        </ion-avatar>
+        <h1 ion-text>{{ cirurgia.nome }}</h1>
+        <small ion-text color="light">Toque para mais informações.</small>
+      </ion-item>
+    </ion-item>
+  </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab color="secondary" (click)="openAdd()" *ngIf="!searchMode"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>
