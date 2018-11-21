@@ -84,6 +84,7 @@ export class DatabaseProvider {
       [`CREATE TABLE IF NOT EXISTS alergia (
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
         tipo VARCHAR(64) NOT NULL,
+        nome VARCHAR(64) NOT NULL,
         nivel VARCHAR(64) NOT NULL,
         sintomas VARCHAR(128) NOT NULL,
         observacoes TEXT NOT NULL,

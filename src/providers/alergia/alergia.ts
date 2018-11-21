@@ -17,6 +17,7 @@ export class AlergiaProvider {
     let a = new Alergia();
     a.id = obj['id'];
     a.tipo = obj['tipo'];
+    a.nome = obj['nome'];
     a.nivel = parseInt(obj['nivel']);
     a.sintomas = obj['sintomas'];
     a.observacoes = obj['observacoes'];
@@ -31,24 +32,31 @@ export class AlergiaProvider {
     return new Promise<number> ( (resolve) => {
       this.dbProvider.getDB()
         .then((db: SQLiteObject) => {
-          // TODO talvez adicionar validacao
-          if(id > 0){
-            this.delete(id);
-          }
-          let sql = `INSERT INTO alergia (tipo, nivel, sintomas, observacoes) VALUES (?, ?, ?, ?)`;
-          let data = [ale.tipo, ale.nivel, ale.sintomas, ale.observacoes];
-          db.executeSql(sql, data)
-            .then((data: any) => {
-              for (let i = 0; i < ale.anexos.length; i++) {
-                let a = ale.anexos[i];
-                if (a['nome'] !== undefined && a['caminho'] !== undefined) {
-                  this.anexos.insertAttachment(data.insertId, CATEGORIA, a.caminho, a.nome);
-                }
+          db.executeSql(`SELECT * FROM alergia WHERE nome = ? AND tipo = ? ;`,
+            [ale.nome, ale.tipo]).then( (result : any) => {
+            if(result.rows.length > 0 && result.rows.item(0)['id'] != id) {
+              resolve(-1);
+            }
+            else {
+              if(id > 0){
+                this.delete(id);
               }
-              resolve(1);
-            })
-            .catch((e) => console.error(e));
-          })
+              let sql = `INSERT INTO alergia (tipo, nome, nivel, sintomas, observacoes) VALUES (?, ?, ?, ?)`;
+              let data = [ale.tipo, ale.nome, ale.nivel, ale.sintomas, ale.observacoes];
+              db.executeSql(sql, data)
+                .then((data: any) => {
+                  for (let i = 0; i < ale.anexos.length; i++) {
+                    let a = ale.anexos[i];
+                    if (a['nome'] !== undefined && a['caminho'] !== undefined) {
+                      this.anexos.insertAttachment(data.insertId, CATEGORIA, a.caminho, a.nome);
+                    }
+                  }
+                  resolve(1);
+                })
+                .catch((e) => console.error(e));
+            }
+          }).catch((e) => console.log(e));
+        })
         .catch((e) => console.log(e));
     });
   }
@@ -117,7 +125,7 @@ export class AlergiaProvider {
     query = '%' + query + '%';
     return this.dbProvider.getDB().then((db: SQLiteObject) => {
       return db.executeSql(`SELECT * FROM alergia WHERE tipo LIKE ? OR nivel LIKE ? OR sintomas LIKE ? 
-      OR observacoes LIKE ?;`, [query, query, query, query]).then((data: any) => {
+      OR observacoes LIKE ? OR nome LIKE ? ;`, [query, query, query, query, query]).then((data: any) => {
         if(data.rows.length > 0){
           let alergias: any[] = [];
           for(let i=0; i<data.rows.length; i++){
@@ -158,6 +166,7 @@ export enum nivelAlergia {
 
 export class Alergia {
   id: number;
+  nome: string;
   tipo: tipoAlergia;
   nivel: nivelAlergia;
   sintomas: string;
