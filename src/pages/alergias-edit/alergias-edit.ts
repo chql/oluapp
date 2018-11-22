@@ -13,6 +13,11 @@ import {AlergiaProvider, Alergia, tipoAlergia, nivelAlergia} from "../../provide
 export class AlergiasEditPage {
 
   /**
+   * Nome da alergia.
+   */
+  alergiaNome : string = '';
+
+  /**
    * Tipo da alergia.
    */
   alergiaTipo : string = AlergiasEditPage.getAlergiaTipo(tipoAlergia.alimentar);
@@ -69,6 +74,7 @@ export class AlergiasEditPage {
 
     if(this.alergiaId) {
       this.dbAlergia.get(this.alergiaId).then(alergia => {
+        this.alergiaNome = alergia.nome;
         this.alergiaTipo = AlergiasEditPage.getAlergiaTipo(alergia.tipo);
         this.alergiaNivel = alergia.nivel;
         this.alergiaSintomas = alergia.sintomas;
@@ -84,6 +90,11 @@ export class AlergiasEditPage {
   formValidate() {
     let hasError : boolean = false;
     let message  : string = '';
+
+    if(this.alergiaNome.length < 1) {
+      hasError = true;
+      message = "Informe o nome da alergia";
+    }
 
     if(this.alergiaSintomas.length < 1) {
       hasError = true;
@@ -117,6 +128,7 @@ export class AlergiasEditPage {
 
     let novaAlergia = new Alergia();
 
+    novaAlergia.nome = this.alergiaNome;
     novaAlergia.tipo = tipoAlergia[this.alergiaTipo];
     novaAlergia.nivel = this.alergiaNivel;
     novaAlergia.sintomas = this.alergiaSintomas;
@@ -131,7 +143,7 @@ export class AlergiasEditPage {
           this.navCtrl.pop();
         }
         else {
-          // TODO: Fail cases
+          alert("Já existe outra alergia com mesmo nome e tipo.");
         }
       }).catch(e => console.log(e));
     }
@@ -143,7 +155,7 @@ export class AlergiasEditPage {
           this.navCtrl.pop();
         }
         else {
-          // TODO: Fail cases
+          alert("Já existe outra alergia com mesmo nome e tipo.");
         }
       }).catch(e => console.log(e));
     }

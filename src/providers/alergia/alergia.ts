@@ -41,7 +41,7 @@ export class AlergiaProvider {
               if(id > 0){
                 this.delete(id);
               }
-              let sql = `INSERT INTO alergia (tipo, nome, nivel, sintomas, observacoes) VALUES (?, ?, ?, ?)`;
+              let sql = `INSERT INTO alergia (tipo, nome, nivel, sintomas, observacoes) VALUES (?, ?, ?, ?, ?)`;
               let data = [ale.tipo, ale.nome, ale.nivel, ale.sintomas, ale.observacoes];
               db.executeSql(sql, data)
                 .then((data: any) => {
