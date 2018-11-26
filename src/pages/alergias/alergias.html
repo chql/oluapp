@@ -26,8 +26,7 @@
           <h6 ion-text>{{ alergia._data_criacao.getDate() }}</h6>
           <small ion-text>{{ monthsName[alergia._data_criacao.getMonth()] }}</small>
         </ion-avatar>
-        <h2 ion-text>{{ formatTipoAlergia(alergia.tipo) }}</h2>
-        <h2 ion-text>{{ formatNivelAlergia(alergia.nivel) }}</h2>
+        <h1 ion-text>{{ alergia.nome }}</h1>
         <small ion-text color="light">Toque para mais informações.</small>
       </ion-item>
     </ion-item>
