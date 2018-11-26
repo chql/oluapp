@@ -102,6 +102,18 @@ export class DatabaseProvider {
         local VARCHAR(64) NOT NULL,
         observacoes TEXT,
         _data_criacao DATETIME DEFAULT current_timestamp NOT NULL
+      );`],
+      [`CREATE TABLE IF NOT EXISTS exame (
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        nome VARCHAR(64) NOT NULL,
+        tipo VARCHAR(64) NOT NULL, 
+        data DATE NOT NULL, 
+        medico_realizou VARCHAR(64) NOT NULL, 
+        medico_solicitou VARCHAR(64) NOT NULL, 
+        local VARCHAR(64) NOT NULL,
+        preco REAL NOT NULL,
+        observacoes TEXT NOT NULL,
+        _data_criacao DATETIME DEFAULT current_timestamp NOT NULL
       );`]
     ])
       .then(() => console.log('Tabelas criadas'))
