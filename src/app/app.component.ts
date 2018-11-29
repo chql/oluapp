@@ -23,7 +23,8 @@ export class MyApp {
     { title: 'Medicamentos', component: 'MedicamentosPage' },
     { title: 'Consultas', component: 'ConsultasPage' },
     { title: 'Alergias', component: 'AlergiasPage' },
-    { title: 'Cirurgias', component: 'CirurgiasPage' }
+    { title: 'Cirurgias', component: 'CirurgiasPage' },
+    { title: 'Exames', component: 'ExamesPage' }
   ];
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen, dbProvider: DatabaseProvider) {

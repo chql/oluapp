@@ -1,0 +1,77 @@
+<ion-header>
+
+  <ion-navbar color="background" hideBackButton="true">
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Exames</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content no-padding>
+  <ion-list no-lines>
+    <ion-item><h1 ion-text text-center>Inserir Exame</h1></ion-item>
+    <ion-item>
+      <ion-label floating>Nome *</ion-label>
+      <ion-input [(ngModel)]="exameNome"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Tipo *</ion-label>
+      <ion-input [(ngModel)]="exameTipo"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Data *</ion-label>
+      <ion-datetime [(ngModel)]="exameData" max="{{exameMaxDate}}"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Nome do solicitante *</ion-label>
+      <ion-input [(ngModel)]="exameSolicitante"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Nome do responsável *</ion-label>
+      <ion-input [(ngModel)]="exameResponsavel"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Local *</ion-label>
+      <ion-input [(ngModel)]="exameLocal"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Valor *</ion-label>
+      <ion-input type="number" [(ngModel)]="exameValor"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Observações *</ion-label>
+      <ion-textarea lines="3" [(ngModel)]="exameObservacoes"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-grid>
+        <ion-row *ngFor="let anexo of exameAnexos">
+          <ion-col>
+            <ion-badge color="light" text-center>
+              <ion-icon name="attach"></ion-icon>
+              {{ anexo.nome }}
+              <button ion-button color="danger" (click)="removeAttachment(anexo)">
+                <ion-icon name="trash"></ion-icon>
+              </button>
+            </ion-badge>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <button ion-button icon-only color="primary" (click)="addAttachment()">
+            <ion-icon name="attach"></ion-icon>
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col><button ion-button full color="secondary" (click)="submitSave()">Salvar</button></ion-col>
+          <ion-col><button ion-button full color="danger" (click)="cancelEditing()">Cancelar</button></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>

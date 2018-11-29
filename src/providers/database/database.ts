@@ -111,7 +111,7 @@ export class DatabaseProvider {
         medico_realizou VARCHAR(64) NOT NULL, 
         medico_solicitou VARCHAR(64) NOT NULL, 
         local VARCHAR(64) NOT NULL,
-        preco REAL NOT NULL,
+        valor REAL NOT NULL,
         observacoes TEXT NOT NULL,
         _data_criacao DATETIME DEFAULT current_timestamp NOT NULL
       );`]

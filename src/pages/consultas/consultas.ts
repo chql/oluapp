@@ -27,7 +27,7 @@ export class ConsultaDetalhesModal
 
   /**
    * Formata a data da consulta para exibicao.
-   * @param rawDate
+   * @param date
    */
   dateFormat(date : Date) {
     return date.getDate() + '/' + (date.getMonth()+1) + '/' + (date.getFullYear());

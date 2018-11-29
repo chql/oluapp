@@ -22,6 +22,7 @@ import { AnexoProvider } from '../providers/anexo/anexo';
 import { ConsultaProvider } from '../providers/consulta/consulta';
 import { AlergiaProvider } from '../providers/alergia/alergia';
 import { CirurgiaProvider } from '../providers/cirurgia/cirurgia';
+import { ExameProvider } from '../providers/exame/exame';
 
 import { VacinasPage, VacinaDetalhesModal } from '../pages/vacinas/vacinas';
 import { VacinasEditPage } from '../pages/vacinas-edit/vacinas-edit';
@@ -33,13 +34,15 @@ import { AlergiasPage, AlergiaDetalhesModal } from "../pages/alergias/alergias";
 import { AlergiasEditPage } from "../pages/alergias-edit/alergias-edit";
 import { CirurgiasPage, CirurgiaDetalhesModal } from "../pages/cirurgias/cirurgias";
 import { CirurgiasEditPage } from "../pages/cirurgias-edit/cirurgias-edit";
+import { ExamesPage, ExameDetalhesModal } from "../pages/exames/exames";
+import { ExamesEditPage } from "../pages/exames-edit/exames-edit";
 
 import { VacinasPageModule } from "../pages/vacinas/vacinas.module";
 import { MedicamentosPageModule } from "../pages/medicamentos/medicamentos.module";
 import { ConsultasPageModule } from "../pages/consultas/consultas.module";
 import { AlergiasPageModule } from "../pages/alergias/alergias.module";
 import { CirurgiasPageModule } from "../pages/cirurgias/cirurgias.module";
-import { ExameProvider } from '../providers/exame/exame';
+import { ExamesPageModule } from "../pages/exames/exames.module";
 
 
 // The translate loader needs to know where to load i18n files
@@ -66,19 +69,18 @@ export function provideSettings(storage: Storage) {
 @NgModule({
   declarations: [
     MyApp,
-    //VacinasPage,
     VacinasEditPage,
     VacinaDetalhesModal,
-    //MedicamentosPage,
     MedicamentosEditPage,
     MedicamentoDetalhesModal,
-    //ConsultasPage,
     ConsultasEditPage,
     ConsultaDetalhesModal,
     AlergiasEditPage,
     AlergiaDetalhesModal,
     CirurgiasEditPage,
-    CirurgiaDetalhesModal
+    CirurgiaDetalhesModal,
+    ExamesEditPage,
+    ExameDetalhesModal
   ],
   imports: [
     BrowserModule,
@@ -88,6 +90,7 @@ export function provideSettings(storage: Storage) {
     ConsultasPageModule,
     AlergiasPageModule,
     CirurgiasPageModule,
+    ExamesPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -115,7 +118,10 @@ export function provideSettings(storage: Storage) {
     AlergiaDetalhesModal,
     CirurgiasPage,
     CirurgiasEditPage,
-    CirurgiaDetalhesModal
+    CirurgiaDetalhesModal,
+    ExamesPage,
+    ExamesEditPage,
+    ExameDetalhesModal
   ],
   providers: [
     Camera,
