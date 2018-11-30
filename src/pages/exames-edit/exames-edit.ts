@@ -183,6 +183,9 @@ export class ExamesEditPage {
           this.pageResult.message = 'Exame alterado com sucesso!';
           this.navCtrl.pop();
         }
+        else {
+          alert('Um exame com mesmo nome e tipo já foi cadastrado nessa data.');
+        }
       }).catch(e => console.log(e));
     }
     else {
@@ -191,6 +194,9 @@ export class ExamesEditPage {
           this.pageResult.result = true;
           this.pageResult.message = 'Exame adicionado com sucesso!';
           this.navCtrl.pop();
+        }
+        else {
+          alert('Um exame com mesmo nome e tipo já foi cadastrado nessa data.');
         }
       }).catch(e => console.log(e));
     }
